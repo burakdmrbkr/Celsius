@@ -1,0 +1,9 @@
+Fix sensor reading and README
+
+- CPU: filter dead (0) AMD SMU temperature readings; show "Sensör Yok"
+  instead of a bogus 0.0 C (LibreHardwareMonitor cannot read SMU here)
+- GPU: show GPU Core temperature instead of Hot Spot / Memory Junction
+- Disk SMART: map the real sensor layout (Level "Life" -> health percent,
+  Factor "Power On Hours", Data "Total Space", Composite temperature)
+- Advisor: honest "unavailable" status with suggestions
+- README: remove AIDA64 comparison; add known-limitations notes

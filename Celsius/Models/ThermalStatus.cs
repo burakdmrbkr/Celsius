@@ -7,5 +7,6 @@ public enum ThermalStatus
     Warm = 1,
     Caution = 2,
     MaintenanceRequired = 3,
-    Critical = 4
+    Critical = 4,
+    Unavailable = 5
 }

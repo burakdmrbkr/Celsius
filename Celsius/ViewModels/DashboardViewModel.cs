@@ -106,6 +106,7 @@ public partial class DashboardViewModel : ObservableObject
         ThermalStatus.Caution => new SolidColorBrush(Color.FromRgb(210, 153, 34)),
         ThermalStatus.MaintenanceRequired => new SolidColorBrush(Color.FromRgb(255, 145, 0)),
         ThermalStatus.Critical => new SolidColorBrush(Color.FromRgb(248, 81, 73)),
+        ThermalStatus.Unavailable => new SolidColorBrush(Color.FromRgb(139, 148, 158)),
         _ => _defaultStatusBrush
     };
 
@@ -116,6 +117,7 @@ public partial class DashboardViewModel : ObservableObject
         ThermalStatus.Caution => "Dikkat",
         ThermalStatus.MaintenanceRequired => "Bakım Gerekli",
         ThermalStatus.Critical => "Kritik",
+        ThermalStatus.Unavailable => "Sensör Yok",
         _ => ""
     };
 }

@@ -5,8 +5,9 @@ namespace Celsius.Services;
 
 /// <summary>
 /// LibreHardwareMonitor üzerinden anlık sensör okumalarını toplar.
-/// LibreHardwareMonitor'un Storage desteği sayesinde disk SMART verisini de sağlar.
-/// En iyi sonuç için uygulama Yönetici olarak çalışmalıdır (WinRing0 sürücüsü).
+/// Akıllı filtreleme: 0/dead okuyan sensörler (örn. bazı AMD anakartlarında SMU sıcaklığı 0 döner)
+/// geçersiz sayılır ve gösterilmez. GPU'da Hot Spot/Memory yerine GPU Core tercih edilir.
+/// En iyi sonuç için uygulama Yönetici olarak çalışmalıdır.
 /// </summary>
 public sealed class HardwareMonitorService : IDisposable
 {
@@ -87,6 +88,10 @@ public sealed class HardwareMonitorService : IDisposable
         }
     }
 
+    /// <summary>
+    /// CPU sensörlerini okur. AMD'de paket sıcaklığı "Core (Tctl/Tdie)", Intel'de "CPU Package" + "Core #n" olur.
+    /// 0 değer (ölü/erişilemeyen SMU) geçersiz sayılır.
+    /// </summary>
     private static void ReadCpu(IHardware cpu, SensorSnapshot snap)
     {
         foreach (var s in cpu.Sensors)
@@ -94,17 +99,25 @@ public sealed class HardwareMonitorService : IDisposable
             switch (s.SensorType)
             {
                 case SensorType.Temperature:
-                    if (!s.Value.HasValue) break;
-                    if (s.Name.Contains("Package", StringComparison.OrdinalIgnoreCase) ||
-                        s.Name.Contains("Tctl", StringComparison.OrdinalIgnoreCase) ||
-                        s.Name.Contains("Tdie", StringComparison.OrdinalIgnoreCase))
+                    // 0 okuyan sensörleri yoksay (bazı AMD anakartlarda SMU sıcaklık 0 döner)
+                    if (!(s.Value is { } v) || v <= 0) break;
+                    var name = s.Name;
+                    if (name.Contains("Tctl", StringComparison.OrdinalIgnoreCase) ||
+                        name.Contains("Tdie", StringComparison.OrdinalIgnoreCase) ||
+                        name.Contains("Package", StringComparison.OrdinalIgnoreCase))
                     {
-                        snap.CpuPackageTemp ??= s.Value;
+                        // AMD: "Core (Tctl/Tdie)" → paket sıcaklığı
+                        snap.CpuPackageTemp ??= v;
                     }
-                    if (s.Name.StartsWith("Core", StringComparison.OrdinalIgnoreCase))
-                        snap.CoreTemps.Add(s.Value.Value);
-                    if (s.Name.StartsWith("CPU", StringComparison.OrdinalIgnoreCase) && snap.CpuPackageTemp is null)
-                        snap.CpuPackageTemp = s.Value; // AMD: "CPU Core (Tctl/Tdie)"
+                    else if (name.StartsWith("Core", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Intel: "Core #1", "Core #2", ...
+                        snap.CoreTemps.Add(v);
+                    }
+                    else if (name.StartsWith("CPU", StringComparison.OrdinalIgnoreCase) && snap.CpuPackageTemp is null)
+                    {
+                        snap.CpuPackageTemp = v;
+                    }
                     break;
 
                 case SensorType.Load:
@@ -121,12 +134,26 @@ public sealed class HardwareMonitorService : IDisposable
         snap.CpuMaxCoreTemp = snap.CoreTemps.Count > 0 ? snap.CoreTemps.Max() : snap.CpuPackageTemp;
     }
 
+    /// <summary>GPU'dan "GPU Core" sıcaklığını tercih eder (Hot Spot / Memory Junction'ı değil).</summary>
     private static void ReadGpu(IHardware gpu, SensorSnapshot snap)
     {
-        var temps = gpu.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Value.HasValue).ToList();
+        var temps = gpu.Sensors
+            .Where(s => s.SensorType == SensorType.Temperature && s.Value is { } v && v > 0)
+            .ToList();
+
+        var coreTemp = temps.FirstOrDefault(s =>
+            s.Name.Contains("Core", StringComparison.OrdinalIgnoreCase) &&
+            !s.Name.Contains("Hot", StringComparison.OrdinalIgnoreCase) &&
+            !s.Name.Contains("Memory", StringComparison.OrdinalIgnoreCase) &&
+            !s.Name.Contains("Junction", StringComparison.OrdinalIgnoreCase) &&
+            !s.Name.Contains("VRAM", StringComparison.OrdinalIgnoreCase));
+
+        snap.GpuTemp = coreTemp is not null ? coreTemp.Value
+            : (temps.Count > 0 ? temps.Max(s => s.Value) : null);
+
         var loads = gpu.Sensors.Where(s => s.SensorType == SensorType.Load && s.Value.HasValue).ToList();
-        snap.GpuTemp = temps.Count > 0 ? temps.Max(s => s.Value) : null;
-        snap.GpuLoad = loads.Count > 0 ? loads.Max(s => s.Value) : null;
+        var coreLoad = loads.FirstOrDefault(s => s.Name.Contains("Core", StringComparison.OrdinalIgnoreCase));
+        snap.GpuLoad = coreLoad?.Value ?? (loads.Count > 0 ? loads.Max(s => s.Value) : null);
     }
 
     private double? ReadMaxFanRpm()
@@ -136,8 +163,8 @@ public sealed class HardwareMonitorService : IDisposable
         {
             foreach (var s in hw.Sensors)
             {
-                if (s.SensorType == SensorType.Fan && s.Value.HasValue)
-                    max = Math.Max(max ?? 0, s.Value.Value);
+                if (s.SensorType == SensorType.Fan && s.Value is { } v && v > 0)
+                    max = Math.Max(max ?? 0, v);
             }
         }
         return max;

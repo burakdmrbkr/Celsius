@@ -30,9 +30,15 @@ public class AiAdvisorService
         var temp = snap.CpuPackageTemp ?? snap.CpuMaxCoreTemp;
         if (temp is null)
         {
-            return new AdvisorResult(ThermalStatus.Healthy,
-                "Sensör verisi alınamıyor. Uygulamayı yönetici olarak çalıştırın.", null,
-                Array.Empty<string>());
+            return new AdvisorResult(ThermalStatus.Unavailable,
+                "İşlemci sıcaklık sensörü okunamadı",
+                null,
+                new[]
+                {
+                    "LibreHardwareMonitor bu anakart + işlemci kombinasyonunda AMD SMU sıcaklığını 0 okuyor; " +
+                    "ölü okumalar gösterilmez. Yük, GPU ve disk verileri güncel.",
+                    "Değeri HWiNFO64 ile karşılaştırabilirsin — farklı bir okuma yöntemi kullanır."
+                });
         }
 
         var model = _cpuModel;

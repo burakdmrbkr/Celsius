@@ -45,6 +45,7 @@ public partial class StressViewModel : ObservableObject
                 ThermalStatus.Critical => new SolidColorBrush(Color.FromRgb(248, 81, 73)),
                 ThermalStatus.MaintenanceRequired => new SolidColorBrush(Color.FromRgb(255, 145, 0)),
                 ThermalStatus.Caution => new SolidColorBrush(Color.FromRgb(210, 153, 34)),
+                ThermalStatus.Unavailable => new SolidColorBrush(Color.FromRgb(139, 148, 158)),
                 _ => new SolidColorBrush(Color.FromRgb(63, 185, 80))
             };
         }

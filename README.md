@@ -1,6 +1,6 @@
 # ❄ Celsius — Akıllı Sıcaklık İzleyici
 
-AIDA64 tarzı, **AI destekli** bir Windows donanım izleme uygulaması. İşlemcinin kritik sıcaklığını
+**AI destekli** bir Windows donanım izleme uygulaması. İşlemcinin kritik sıcaklığını
 **SQLite veritabanındaki model eşlemesinden** bilir; anlık sensör verisini okur ve bakım gerekiyorsa
 uyarır. Disk sağlığını (SMART) ve stres testi sırasındaki sıcaklık davranışını da izler.
 
@@ -35,6 +35,14 @@ Yönetici istemi gösterir — WinRing0 sürücüsü nedeniyle).
 dotnet build Celsius/Celsius.sln
 dotnet run --project Celsius/Celsius
 ```
+
+## Bilinen sınırlamalar
+
+- **AMD SMU sıcaklığı bazı anakartlarda okunamıyor:** LibreHardwareMonitor, belirli anakart + Ryzen
+  kombinasyonlarında (ör. MSI B550) işlemci paket sıcaklığını 0 olarak okuyabilir. Bu ölü okumalar
+  filtrelenir ve "Sensör Yok" olarak gösterilir; yük, GPU ve disk verileri güncel kalır.
+  Karşılaştırma için HWiNFO64 farklı bir okuma yöntemi kullandığından değer gösterebilir.
+- **GPU sıcaklığı:** Hot Spot / Memory Junction yerine **GPU Core** değeri gösterilir.
 
 ## Yapı
 

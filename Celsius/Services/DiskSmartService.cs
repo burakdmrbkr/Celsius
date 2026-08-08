@@ -4,8 +4,10 @@ using LibreHardwareMonitor.Hardware;
 namespace Celsius.Services;
 
 /// <summary>
-/// CrystallDiskInfo tarzı disk sağlığı özetini SMART sensörlerinden üretir.
-/// Ham SMART öznitelikleri LibreHardwareMonitor'un Storage sensörleri olarak kullanılabilir.
+/// Disk sağlığı özetini SMART sensörlerinden üretir (CrystalDiskInfo tarzı).
+/// Gerçek LibreHardwareMonitor Storage sensör düzeni kullanılır:
+///   Level "Life" → sağlık yüzdesi · Temperature "Composite" → sıcaklık
+///   Factor "Power On Hours" → çalışma saati · Data "Total Space" → kapasite (GB)
 /// </summary>
 public sealed class DiskSmartService
 {
@@ -33,29 +35,46 @@ public sealed class DiskSmartService
     {
         var info = new DiskHealthInfo { Name = storage.Name };
 
-        var tempSensor = storage.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Temperature);
-        info.Temperature = tempSensor?.Value;
+        // Sıcaklık: Composite tercih edilir, yoksa ilk geçerli
+        var temp = storage.Sensors.FirstOrDefault(s =>
+                       s.SensorType == SensorType.Temperature &&
+                       s.Name.Contains("Composite", StringComparison.OrdinalIgnoreCase))
+                   ?? storage.Sensors.FirstOrDefault(s =>
+                       s.SensorType == SensorType.Temperature &&
+                       !s.Name.Contains("Warning", StringComparison.OrdinalIgnoreCase) &&
+                       !s.Name.Contains("Critical", StringComparison.OrdinalIgnoreCase) &&
+                       s.Value.HasValue);
+        info.Temperature = temp?.Value;
 
         foreach (var s in storage.Sensors)
         {
-            if (s.SensorType != SensorType.Data || !s.Value.HasValue) continue;
-            var name = s.Name.ToLowerInvariant();
+            if (!s.Value.HasValue) continue;
             var value = s.Value.Value;
 
-            if (name.Contains("remaining life") || name.Contains("health status"))
-                info.HealthPercent = (int)Math.Clamp(Math.Round(value), 0, 100);
-            else if (name.Contains("reallocated"))           // Reallocated Sectors Count
-                info.ReallocatedSectors = value;
-            else if (name.Contains("uncorrectable") || name.Contains("pending")) // Pending/Uncorrectable
-                info.PendingSectors = value;
-            else if (name.Contains("power on") || name.Contains("start stop count"))
-                info.PowerOnHours ??= value;
-            else if (name.Contains("media wear") || name.Contains("used reserved") || name.Contains("erase fail"))
-                info.PowerOnHours ??= value; // SSD ömrü göstergesi (opsiyonel)
-        }
+            switch (s.SensorType)
+            {
+                case SensorType.Level:
+                    if (s.Name.Equals("Life", StringComparison.OrdinalIgnoreCase))
+                        info.HealthPercent = ClampHealth(value);
+                    else if (s.Name.Contains("Available Spare", StringComparison.OrdinalIgnoreCase) &&
+                             !s.Name.Contains("Threshold", StringComparison.OrdinalIgnoreCase))
+                        info.HealthPercent = Math.Min(info.HealthPercent, ClampHealth(value));
+                    break;
 
-        // SSD/HDD ayrımı: "media" olarak tanımlıysa MediaType kullan
-        foreach (var d in storage.SubHardware) { /* Storage alt-donanımı yoktur; tutarlılık için. */ }
+                case SensorType.Factor:
+                    if (s.Name.Contains("Power On Hours", StringComparison.OrdinalIgnoreCase))
+                        info.PowerOnHours = value;
+                    break;
+
+                case SensorType.Data:
+                    var n = s.Name.ToLowerInvariant();
+                    if (n.Contains("total space"))
+                        info.CapacityGb = value;
+                    else if (n.Contains("reallocated") || n.Contains("uncorrectable") || n.Contains("pending"))
+                        info.PendingSectors = value;
+                    break;
+            }
+        }
 
         info.Status = info.HealthPercent switch
         {
@@ -67,4 +86,6 @@ public sealed class DiskSmartService
 
         return info;
     }
+
+    private static int ClampHealth(double v) => (int)Math.Clamp(Math.Round(v), 0, 100);
 }
