@@ -2,18 +2,12 @@ using System.Collections.ObjectModel;
 using System.Windows.Media;
 using Celsius.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
-using LiveChartsCore;
-using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.Painting;
-using SkiaSharp;
 
 namespace Celsius.ViewModels;
 
-/// <summary>"Genel Bakış" sekmesi: canlı sıcaklıklar, gerçek zamanlı grafik ve AI durum özeti.</summary>
+/// <summary>"Genel Bakış" sekmesi: canlı sıcaklıklar, çekirdek yükleri ve AI durum özeti.</summary>
 public partial class DashboardViewModel : ObservableObject
 {
-    private const int ChartPoints = 60;
-    private readonly ObservableCollection<double> _tempHistory = new();
     private static readonly Brush _defaultStatusBrush =
         new SolidColorBrush(Color.FromRgb(139, 148, 158));
 
@@ -31,38 +25,6 @@ public partial class DashboardViewModel : ObservableObject
     [ObservableProperty] private string _modelMatched = "";
 
     public ObservableCollection<CoreTempItem> CoreTemps { get; } = new();
-
-    public ISeries[] Series { get; }
-
-    public Axis[] XAxes { get; }
-    public Axis[] YAxes { get; }
-
-    public DashboardViewModel()
-    {
-        Series = new ISeries[]
-        {
-            new LineSeries<double>
-            {
-                Name = "CPU Sıcaklık",
-                Values = _tempHistory,
-                Fill = null,
-                GeometrySize = 0,
-                LineSmoothness = 0.5,
-                Stroke = new SolidColorPaint(SKColor.Parse("#2F81F7")) { StrokeThickness = 2 }
-            }
-        };
-        XAxes = new[]
-        {
-            new Axis { Name = "Son 60 sn", MinLimit = 0, MaxLimit = ChartPoints - 1,
-                       SeparatorsPaint = new SolidColorPaint(SKColor.Parse("#30363D")) { StrokeThickness = 1 } }
-        };
-        YAxes = new[]
-        {
-            new Axis { Name = "°C", MinLimit = 0, MaxLimit = 105,
-                       Labeler = v => v + "°C",
-                       SeparatorsPaint = new SolidColorPaint(SKColor.Parse("#30363D")) { StrokeThickness = 1 } }
-        };
-    }
 
     /// <summary>Her anket döngüsünde UI değerlerini günceller.</summary>
     public void Refresh(SensorSnapshot snap, AdvisorResult advice, CpuModelInfo? model)
@@ -91,12 +53,6 @@ public partial class DashboardViewModel : ObservableObject
                 CoreTemps.Add(new CoreTempItem { Label = $"Çekirdek {i + 1}", TjMax = tj, Temp = snap.CoreTemps[i] });
         }
 
-        // Grafik: kaydıran pencere
-        if (snap.CpuPackageTemp is { } t)
-        {
-            _tempHistory.Add(t);
-            while (_tempHistory.Count > ChartPoints) _tempHistory.RemoveAt(0);
-        }
     }
 
     private static Brush StatusToBrush(ThermalStatus status) => status switch

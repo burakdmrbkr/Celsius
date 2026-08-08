@@ -11,7 +11,6 @@ uyarır. Disk sağlığını (SMART) ve stres testi sırasındaki sıcaklık dav
   (Sağlıklı → Normal → Dikkat → Bakım Gerekli → Kritik) ve oturum içi trend analizi (termal macun, fan temizliği önerisi)
 - 💾 **Disk sağlığı (SMART)** — CrystalDiskInfo tarzı özet: sağlık yüzdesi, sıcaklık, çalışma saati, yeniden ayrılan sektör
 - ⚡ **Stress test** — tüm çekirdeklerde yoğun hesaplama; yük altında sıcaklık izleme devam eder
-- 📊 **Gerçek zamanlı grafik** — son 60 saniyenin sıcaklık eğrisi
 - 🗄️ **SQLite referans veritabanı** — popüler Intel/AMD işlemcilerin termal eşikleri ilk çalıştırmada doldurulur
   (yerel, `%LocalAppData%\Celsius\celsius.db`)
 
@@ -23,7 +22,6 @@ uyarır. Disk sağlığını (SMART) ve stres testi sırasındaki sıcaklık dav
 |---|---|
 | UI | WPF (.NET 8, MVVM — CommunityToolkit.Mvvm) |
 | Sensör + SMART | [LibreHardwareMonitorLib](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor) |
-| Grafik | [LiveCharts2](https://github.com/beto-rodriguez/LiveCharts) |
 | Veritabanı | SQLite (Microsoft.Data.Sqlite) |
 
 ## Çalıştırma
