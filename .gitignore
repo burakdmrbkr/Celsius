@@ -1,0 +1,28 @@
+# .NET build output
+[Bb]in/
+[Oo]bj/
+*.user
+
+# Visual Studio
+.vs/
+.vsconfig
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# NuGet
+*.nupkg
+packages/
+*.nupkg.metadata
+*.cache
+
+# Local runtime data (uygulama veritabanı bu klasörde değil; LocalAppData'da)
+appsettings.local.json
+*.db
+
+# OS
+Thumbs.db
+.DS_Store
