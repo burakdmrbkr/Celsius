@@ -9,9 +9,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AssemblyName>Celsius</AssemblyName>
     <RootNamespace>Celsius</RootNamespace>
-    <Version>1.3</Version>
-    <AssemblyVersion>1.3.0.0</AssemblyVersion>
-    <FileVersion>1.3.0.0</FileVersion>
+    <Version>1.4</Version>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
+    <FileVersion>1.4.0.0</FileVersion>
     <Company>burakdmrbkr</Company>
     <Product>Celsius</Product>
     <Description>AI destekli sıcaklık izleyici — akıllı işlemci ve disk sağlığı monitörü</Description>
