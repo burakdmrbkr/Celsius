@@ -293,6 +293,217 @@ public class CpuDatabaseService
             ("AMD", "Ryzen 5 5600G", 95, 85, null),
             ("AMD", "Ryzen 5 5500G", 95, 85, null),
             ("AMD", "Ryzen 3 5300G", 95, 85, null),
+
+            // ============ AMD — AM5 (Zen 4, 7000 serisi; X3D TjMax 89) ============
+            ("AMD", "Ryzen 9 7950X", 95, 85, null),
+            ("AMD", "Ryzen 9 7950X3D", 89, 80, "3D V-Cache — 89°C TjMax; uzun süre 80°C üzeri önerilmez."),
+            ("AMD", "Ryzen 9 7900X", 95, 85, null),
+            ("AMD", "Ryzen 9 7900X3D", 89, 80, null),
+            ("AMD", "Ryzen 7 7800X3D", 89, 80, "3D V-Cache — 89°C TjMax; uzun süre 80°C üzeri önerilmez."),
+            ("AMD", "Ryzen 7 7700X", 95, 85, null),
+            ("AMD", "Ryzen 5 7600X", 95, 85, null),
+            ("AMD", "Ryzen 5 7600", 95, 85, null),
+
+            // ============ INTEL MOBİL — Sandy Bridge (2. nesil) ============
+            ("Intel", "Core i7-2920XM", 100, 90, "Mobil — laptop soğutma sınırlıdır; termal macun ve fan temizliği önemli."),
+            ("Intel", "Core i7-2820QM", 100, 90, null),
+            ("Intel", "Core i7-2760QM", 100, 90, null),
+            ("Intel", "Core i7-2720QM", 100, 90, null),
+            ("Intel", "Core i7-2630QM", 100, 90, null),
+            ("Intel", "Core i5-2540M", 100, 90, null),
+            ("Intel", "Core i5-2520M", 100, 90, null),
+            ("Intel", "Core i5-2410M", 100, 90, null),
+            ("Intel", "Core i3-2330M", 100, 90, null),
+            ("Intel", "Core i3-2310M", 100, 90, null),
+
+            // ============ Intel Mobil — Ivy Bridge (3. nesil; TjMax 105) ============
+            ("Intel", "Core i7-3920XM", 105, 90, null),
+            ("Intel", "Core i7-3820QM", 105, 90, null),
+            ("Intel", "Core i7-3740QM", 105, 90, null),
+            ("Intel", "Core i7-3720QM", 105, 90, null),
+            ("Intel", "Core i7-3630QM", 105, 90, null),
+            ("Intel", "Core i7-3610QM", 105, 90, null),
+            ("Intel", "Core i5-3380M", 105, 90, null),
+            ("Intel", "Core i5-3320M", 105, 90, null),
+            ("Intel", "Core i5-3210M", 105, 90, null),
+            ("Intel", "Core i3-3120M", 105, 90, null),
+            ("Intel", "Core i3-3110M", 105, 90, null),
+
+            // ============ Intel Mobil — Haswell (4. nesil) ============
+            ("Intel", "Core i7-4930MX", 100, 90, null),
+            ("Intel", "Core i7-4910MQ", 100, 90, null),
+            ("Intel", "Core i7-4810MQ", 100, 90, null),
+            ("Intel", "Core i7-4710MQ", 100, 90, null),
+            ("Intel", "Core i7-4700MQ", 100, 90, null),
+            ("Intel", "Core i7-4720HQ", 100, 90, null),
+            ("Intel", "Core i7-4710HQ", 100, 90, null),
+            ("Intel", "Core i5-4340M", 100, 90, null),
+            ("Intel", "Core i5-4210M", 100, 90, null),
+            ("Intel", "Core i5-4200M", 100, 90, null),
+            ("Intel", "Core i3-4100M", 100, 90, null),
+            ("Intel", "Core i3-4000M", 100, 90, null),
+
+            // ============ Intel Mobil — Broadwell (5. nesil) ============
+            ("Intel", "Core i7-5850HQ", 100, 90, null),
+            ("Intel", "Core i7-5700HQ", 100, 90, null),
+            ("Intel", "Core i7-5600U", 105, 90, null),
+            ("Intel", "Core i7-5500U", 105, 90, null),
+            ("Intel", "Core i5-5300U", 105, 90, null),
+            ("Intel", "Core i5-5200U", 105, 90, null),
+            ("Intel", "Core i3-5005U", 105, 90, null),
+
+            // ============ Intel Mobil — Skylake (6. nesil) ============
+            ("Intel", "Core i7-6820HK", 100, 90, null),
+            ("Intel", "Core i7-6700HQ", 100, 90, null),
+            ("Intel", "Core i5-6300HQ", 100, 90, null),
+            ("Intel", "Core i7-6560U", 100, 90, null),
+            ("Intel", "Core i7-6500U", 100, 90, null),
+            ("Intel", "Core i5-6200U", 100, 90, null),
+            ("Intel", "Core i3-6100U", 100, 90, null),
+
+            // ============ Intel Mobil — Kaby Lake (7. nesil) ============
+            ("Intel", "Core i7-7700HQ", 100, 90, null),
+            ("Intel", "Core i5-7300HQ", 100, 90, null),
+            ("Intel", "Core i7-7500U", 100, 90, null),
+            ("Intel", "Core i5-7200U", 100, 90, null),
+            ("Intel", "Core i3-7100U", 100, 90, null),
+
+            // ============ Intel Mobil — Coffee Lake (8./9. nesil) ============
+            ("Intel", "Core i7-8750H", 100, 90, null),
+            ("Intel", "Core i5-8300H", 100, 90, null),
+            ("Intel", "Core i7-8550U", 100, 90, null),
+            ("Intel", "Core i5-8250U", 100, 90, null),
+            ("Intel", "Core i3-8130U", 100, 90, null),
+            ("Intel", "Core i9-9980HK", 100, 90, null),
+            ("Intel", "Core i9-9880H", 100, 90, null),
+            ("Intel", "Core i7-9880H", 100, 90, null),
+            ("Intel", "Core i7-9750H", 100, 90, null),
+            ("Intel", "Core i5-9300H", 100, 90, null),
+
+            // ============ Intel Mobil — Comet Lake (10. nesil) ============
+            ("Intel", "Core i9-10980HK", 100, 90, null),
+            ("Intel", "Core i9-10880H", 100, 90, null),
+            ("Intel", "Core i7-10875H", 100, 90, null),
+            ("Intel", "Core i7-10750H", 100, 90, null),
+            ("Intel", "Core i5-10500H", 100, 90, null),
+            ("Intel", "Core i5-10300H", 100, 90, null),
+            ("Intel", "Core i7-10710U", 100, 90, null),
+            ("Intel", "Core i7-10510U", 100, 90, null),
+            ("Intel", "Core i5-10210U", 100, 90, null),
+
+            // ============ Intel Mobil — Tiger Lake (11. nesil) ============
+            ("Intel", "Core i7-11800H", 100, 90, null),
+            ("Intel", "Core i5-11400H", 100, 90, null),
+            ("Intel", "Core i7-11370H", 100, 90, null),
+            ("Intel", "Core i7-1185G7", 100, 90, null),
+            ("Intel", "Core i7-1165G7", 100, 90, null),
+            ("Intel", "Core i5-1135G7", 100, 90, null),
+            ("Intel", "Core i3-1115G4", 100, 90, null),
+
+            // ============ Intel Mobil — Alder Lake (12. nesil) ============
+            ("Intel", "Core i9-12900HK", 100, 90, null),
+            ("Intel", "Core i9-12900H", 100, 90, null),
+            ("Intel", "Core i7-12800H", 100, 90, null),
+            ("Intel", "Core i7-12700H", 100, 90, null),
+            ("Intel", "Core i5-12600H", 100, 90, null),
+            ("Intel", "Core i5-12500H", 100, 90, null),
+            ("Intel", "Core i7-1260P", 100, 90, null),
+            ("Intel", "Core i5-1240P", 100, 90, null),
+            ("Intel", "Core i7-1255U", 100, 90, null),
+            ("Intel", "Core i5-1235U", 100, 90, null),
+
+            // ============ Intel Mobil — Raptor Lake (13. nesil) ============
+            ("Intel", "Core i9-13980HX", 100, 90, null),
+            ("Intel", "Core i9-13950HX", 100, 90, null),
+            ("Intel", "Core i9-13900HX", 100, 90, null),
+            ("Intel", "Core i7-13800HX", 100, 90, null),
+            ("Intel", "Core i7-13700HX", 100, 90, null),
+            ("Intel", "Core i7-13700H", 100, 90, null),
+            ("Intel", "Core i5-13600HX", 100, 90, null),
+            ("Intel", "Core i5-13600H", 100, 90, null),
+            ("Intel", "Core i5-13500H", 100, 90, null),
+            ("Intel", "Core i7-1370P", 100, 90, null),
+            ("Intel", "Core i5-1340P", 100, 90, null),
+            ("Intel", "Core i7-1365U", 100, 90, null),
+            ("Intel", "Core i5-1335U", 100, 90, null),
+            ("Intel", "Core i3-1315U", 100, 90, null),
+
+            // ============ Intel Mobil — Raptor Lake Refresh (14. nesil) ============
+            ("Intel", "Core i9-14900HX", 100, 90, null),
+            ("Intel", "Core i7-14700HX", 100, 90, null),
+            ("Intel", "Core i5-14600HX", 100, 90, null),
+            ("Intel", "Core i5-14500HX", 100, 90, null),
+
+            // ============ AMD Mobil — Raven Ridge (2000 serisi, Zen) ============
+            ("AMD", "Ryzen 7 2700U", 95, 80, "Mobil — laptop soğutma sınırlı; fan/macun bakımı önemli."),
+            ("AMD", "Ryzen 5 2500U", 95, 80, null),
+            ("AMD", "Ryzen 3 2300U", 95, 80, null),
+
+            // ============ AMD Mobil — Picasso (3000 serisi; TjMax 105) ============
+            ("AMD", "Ryzen 7 3780U", 105, 90, null),
+            ("AMD", "Ryzen 7 3700U", 105, 90, null),
+            ("AMD", "Ryzen 5 3550H", 105, 90, null),
+            ("AMD", "Ryzen 5 3500U", 105, 90, null),
+            ("AMD", "Ryzen 3 3300U", 105, 90, null),
+            ("AMD", "Ryzen 3 3200U", 105, 90, null),
+
+            // ============ AMD Mobil — Renoir (4000 serisi; TjMax 105) ============
+            ("AMD", "Ryzen 9 4900H", 105, 90, null),
+            ("AMD", "Ryzen 9 4900HS", 105, 90, null),
+            ("AMD", "Ryzen 7 4800H", 105, 90, null),
+            ("AMD", "Ryzen 7 4800HS", 105, 90, null),
+            ("AMD", "Ryzen 7 4700U", 105, 90, null),
+            ("AMD", "Ryzen 5 4600H", 105, 90, null),
+            ("AMD", "Ryzen 5 4600U", 105, 90, null),
+            ("AMD", "Ryzen 5 4500U", 105, 90, null),
+            ("AMD", "Ryzen 3 4300U", 105, 90, null),
+
+            // ============ AMD Mobil — Cezanne (5000 serisi; TjMax 105) ============
+            ("AMD", "Ryzen 9 5980HX", 105, 90, null),
+            ("AMD", "Ryzen 9 5900HX", 105, 90, null),
+            ("AMD", "Ryzen 7 5800H", 105, 90, null),
+            ("AMD", "Ryzen 7 5800HS", 105, 90, null),
+            ("AMD", "Ryzen 7 5700U", 105, 90, null),
+            ("AMD", "Ryzen 5 5600H", 105, 90, null),
+            ("AMD", "Ryzen 5 5600U", 105, 90, null),
+            ("AMD", "Ryzen 5 5500U", 105, 90, null),
+            ("AMD", "Ryzen 3 5400U", 105, 90, null),
+
+            // ============ AMD Mobil — Rembrandt (6000 serisi; TjMax 95) ============
+            ("AMD", "Ryzen 9 6980HX", 95, 80, "Rembrandt TjMax 95°C — yük altında 85°C üzeri uzun süre tutulmamalı."),
+            ("AMD", "Ryzen 9 6900HX", 95, 80, null),
+            ("AMD", "Ryzen 7 6800H", 95, 80, null),
+            ("AMD", "Ryzen 7 6800U", 95, 80, null),
+            ("AMD", "Ryzen 5 6600H", 95, 80, null),
+            ("AMD", "Ryzen 5 6600U", 95, 80, null),
+
+            // ============ AMD Mobil — Rembrandt-R (7000; TjMax 95) ============
+            ("AMD", "Ryzen 7 7735H", 95, 80, null),
+            ("AMD", "Ryzen 7 7735U", 95, 80, null),
+            ("AMD", "Ryzen 5 7535H", 95, 80, null),
+            ("AMD", "Ryzen 5 7535U", 95, 80, null),
+
+            // ============ AMD Mobil — Phoenix (7040; TjMax 100) ============
+            ("AMD", "Ryzen 9 7940HS", 100, 85, null),
+            ("AMD", "Ryzen 9 7940H", 100, 85, null),
+            ("AMD", "Ryzen 7 7840HS", 100, 85, null),
+            ("AMD", "Ryzen 7 7840U", 100, 85, null),
+            ("AMD", "Ryzen 5 7640HS", 100, 85, null),
+            ("AMD", "Ryzen 5 7640U", 100, 85, null),
+
+            // ============ AMD Mobil — Dragon Range (7045 HX; TjMax 100) ============
+            ("AMD", "Ryzen 9 7945HX3D", 100, 85, "3D V-Cache — mobil HX ısı yoğun; güçlü soğutma şart."),
+            ("AMD", "Ryzen 9 7945HX", 100, 85, null),
+            ("AMD", "Ryzen 7 7745HX", 100, 85, null),
+            ("AMD", "Ryzen 5 7645HX", 100, 85, null),
+
+            // ============ AMD Mobil — Hawk Point (8000; TjMax 100) ============
+            ("AMD", "Ryzen 9 8945HS", 100, 85, null),
+            ("AMD", "Ryzen 7 8845HS", 100, 85, null),
+            ("AMD", "Ryzen 7 8845U", 100, 85, null),
+            ("AMD", "Ryzen 5 8645HS", 100, 85, null),
+            ("AMD", "Ryzen 5 8640U", 100, 85, null),
+            ("AMD", "Ryzen 5 8540U", 100, 85, null),
         };
 
         using var tx = conn.BeginTransaction();

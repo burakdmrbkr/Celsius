@@ -9,8 +9,15 @@ paketleri birlikte yayınlanır.
 ### Eklendi
 - **İşlemci veritabanı genişletildi:** Intel **2. nesil (Sandy Bridge)** ile **14. nesil
   (Raptor Lake)** arasındaki tüm ana masaüstü işlemciler + AMD **AM4 soketinin tüm Ryzen**
-  (1.–5. nesil, Zen/Zen+/Zen 2/Zen 3 ve tüm APU'lar) modelleri eklendi. Her model için TjMax,
-  önerilen sürekli sıcaklık (SustainedMaxTemp) ve modele özgü **risk/bakım notu** tanımlandı.
+  (1.–5. nesil, Zen/Zen+/Zen 2/Zen 3 ve tüm APU'lar) + **AM5 (Zen4)** modelleri eklendi. Her
+  model için TjMax, önerilen sürekli sıcaklık (SustainedMaxTemp) ve modele özgü
+  **risk/bakım notu** tanımlandı.
+- **Mobil (laptop) işlemciler eklendi:** Intel mobil (2.–14. nesil; Ivy Bridge QM ve Broadwell-U
+  105°C, diğerleri 100°C) ve AMD Ryzen mobil (Raven/Picasso/Renoir/Cezanne 95–105°C, Rembrandt
+  6000/7000 **95°C**, Phoenix/Dragon Range/Hawk Point **100°C**). TjMax değerleri **MCP araştırmasıyla
+  doğrulandı** (Intel ARK, AMD ürün sayfaları, TechPowerUp, LaptopMedia).
+- **Düzeltme:** AM5 X3D masaüstü (Ryzen 5 7800X3D / 7 7900X3D / 9 7950X3D) TjMax **95°C → 89°C**;
+  AM5 masaüstü girişleri yeniden eklendi.
 - **Risk ve bakım önerileri:** Modelin risk notu, panelde işlemci adının yanında gösteriliyor;
   AI danışmanı duruma göre önleyici bakım önerileri üretiyor (termal macun yenileme, kasa
   tozu/hava akışı, fan profili, soğutucu yeterliliği, güncel BIOS/microcode).
