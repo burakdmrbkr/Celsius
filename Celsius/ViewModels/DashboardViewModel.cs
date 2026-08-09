@@ -23,6 +23,7 @@ public partial class DashboardViewModel : ObservableObject
     [ObservableProperty] private string _statusSummary = "";
     [ObservableProperty] private string _statusSuggestions = "";
     [ObservableProperty] private string _modelMatched = "";
+    [ObservableProperty] private string _tempSourceText = "Sıcaklık kaynağı: bekleniyor…";
 
     public ObservableCollection<CoreTempItem> CoreTemps { get; } = new();
 
@@ -43,6 +44,13 @@ public partial class DashboardViewModel : ObservableObject
         StatusSuggestions = advice.SuggestionsJoined;
 
         ModelMatched = model is null ? "Veritabanında eşleşme yok — varsayılan eşikler kullanılıyor." : $"Eşleşen model: {model}";
+
+        TempSourceText = snap.TempSource switch
+        {
+            "HWiNFO" => "Sıcaklık kaynağı: HWiNFO",
+            "LibreHardwareMonitor" => "Sıcaklık kaynağı: LibreHardwareMonitor",
+            _ => "Sıcaklık kaynağı: yok — Secure Boot kapalıyken okunur"
+        };
 
         // Çekirdek listesi
         CoreTemps.Clear();

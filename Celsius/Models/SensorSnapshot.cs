@@ -17,4 +17,7 @@ public class SensorSnapshot
     public double? MaxFanRpm { get; set; }
     public double? Voltage { get; set; }
     public bool HasSensors { get; init; } = true;
+
+    /// <summary>Sıcaklık verisinin geldiği kaynak: "HWiNFO", "LibreHardwareMonitor" ya da boş.</summary>
+    public string TempSource { get; set; } = "";
 }

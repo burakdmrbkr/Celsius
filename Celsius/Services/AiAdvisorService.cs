@@ -31,13 +31,14 @@ public class AiAdvisorService
         if (temp is null)
         {
             return new AdvisorResult(ThermalStatus.Unavailable,
-                "İşlemci sıcaklık sensörü okunamadı",
+                "İşlemci sıcaklık sensörü okunamıyor",
                 null,
                 new[]
                 {
-                    "LibreHardwareMonitor bu anakart + işlemci kombinasyonunda AMD SMU sıcaklığını 0 okuyor; " +
-                    "ölü okumalar gösterilmez. Yük, GPU ve disk verileri güncel.",
-                    "Değeri HWiNFO64 ile karşılaştırabilirsin — farklı bir okuma yöntemi kullanır."
+                    "LibreHardwareMonitor bu anakartta AMD SMU sıcaklığını okuyamıyor — Secure Boot, imzasız " +
+                    "WinRing0 sürücüsünü reddediyor; yük, GPU ve disk verileri yine de güncel.",
+                    "Çözüm: Uygulamayı Yönetici olarak çalıştır ve Secure Boot'u BIOS'tan kapat " +
+                    "(Settings > Security > Secure Boot > Disabled) — CPU sıcaklığı o zaman okunur."
                 });
         }
 

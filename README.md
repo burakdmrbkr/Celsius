@@ -36,10 +36,10 @@ dotnet run --project Celsius/Celsius
 
 ## Bilinen sınırlamalar
 
-- **AMD SMU sıcaklığı bazı anakartlarda okunamıyor:** LibreHardwareMonitor, belirli anakart + Ryzen
-  kombinasyonlarında (ör. MSI B550) işlemci paket sıcaklığını 0 olarak okuyabilir. Bu ölü okumalar
-  filtrelenir ve "Sensör Yok" olarak gösterilir; yük, GPU ve disk verileri güncel kalır.
-  Karşılaştırma için HWiNFO64 farklı bir okuma yöntemi kullandığından değer gösterebilir.
+- **CPU sıcaklığı, Secure Boot AÇIKken okunamaz:** LibreHardwareMonitor'un imzasız WinRing0 sürücüsü
+  Secure Boot altında Windows tarafından reddedilir; AMD SMU okumaları (sıcaklık/hız/güç) 0 döner ve
+  "Sensör Yok" olarak gösterilir. Çözüm: BIOS'tan **Secure Boot'u kapatın** — kapalıyken CPU sıcaklığı
+  uygulama içinde bağımsız okunur. Yük, GPU ve disk verileri her durumda günceldir.
 - **GPU sıcaklığı:** Hot Spot / Memory Junction yerine **GPU Core** değeri gösterilir.
 
 ## Yapı

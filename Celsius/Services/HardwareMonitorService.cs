@@ -52,6 +52,8 @@ public sealed class HardwareMonitorService : IDisposable
             var cpu = Find(HardwareType.Cpu);
             snap = new SensorSnapshot { CpuName = cpu?.Name ?? "Bilinmiyor" };
             if (cpu is not null) ReadCpu(cpu, snap);
+            if (snap.CpuPackageTemp is not null || snap.CpuMaxCoreTemp is not null)
+                snap.TempSource = "LibreHardwareMonitor";
 
             var gpu = Find(HardwareType.GpuNvidia) ?? Find(HardwareType.GpuAmd) ?? Find(HardwareType.GpuIntel);
             if (gpu is not null) ReadGpu(gpu, snap);
