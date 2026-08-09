@@ -44,7 +44,8 @@ public partial class DashboardViewModel : ObservableObject
         StatusSummary = StatusDetail(advice.Status);
         StatusSuggestions = advice.SuggestionsJoined;
 
-        ModelMatched = model is null ? "Veritabanında eşleşme yok — varsayılan eşikler kullanılıyor." : $"Eşleşen model: {model}";
+        ModelMatched = model is null ? "Veritabanında eşleşme yok — varsayılan eşikler kullanılıyor."
+            : $"Eşleşen model: {model}{(model.Note is { Length: > 0 } n ? " — " + n : "")}";
 
         TempSourceText = snap.TempSource switch
         {

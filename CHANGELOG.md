@@ -4,22 +4,35 @@ Bu projedeki önemli değişiklikler sürüm numarası mantığında tutulur. S�
 push'ta çalışan otomatik workflow tarafından üretilir ve GitHub Releases ile Inno Setup kurulum
 paketleri birlikte yayınlanır.
 
-## [Unreleased] — v1.6-beta (yolda)
+## [Unreleased] — sıradaki beta
+
+### Eklendi
+- **İşlemci veritabanı genişletildi:** Intel **2. nesil (Sandy Bridge)** ile **14. nesil
+  (Raptor Lake)** arasındaki tüm ana masaüstü işlemciler + AMD **AM4 soketinin tüm Ryzen**
+  (1.–5. nesil, Zen/Zen+/Zen 2/Zen 3 ve tüm APU'lar) modelleri eklendi. Her model için TjMax,
+  önerilen sürekli sıcaklık (SustainedMaxTemp) ve modele özgü **risk/bakım notu** tanımlandı.
+- **Risk ve bakım önerileri:** Modelin risk notu, panelde işlemci adının yanında gösteriliyor;
+  AI danışmanı duruma göre önleyici bakım önerileri üretiyor (termal macun yenileme, kasa
+  tozu/hava akışı, fan profili, soğutucu yeterliliği, güncel BIOS/microcode).
+- **Eşleştirme sağlamlaştırıldı:** Eşit skorda daha spesifik (daha çok kelime eşleşen) model
+  tercih ediliyor; genişleyen veri tabanı sayesinde eski nesil ve AM4 işlemciler artık doğru
+  tanınıyor.
+
+## [v1.9-beta] - 2026-08-09
+
+### Değişti
+- Logo yenilendi ve ikon altyapısı güçlendirildi: kare (1:1) tasarım, şeffaf kenarların otomatik
+  kırpılması, tüm boyutlar (16–256) için gerçek DIB/BMP girişleri + 256 px PNG, 1024×1024 kaynak
+  kullanımı → görev çubuğu ve başlık çubuğu ikonu keskin görünüyor.
+- Sol üstte marka alanında kar tanesi yerine uygulama logosu görüntülüyor.
+
+## [v1.6-beta] - 2026-08-09
 
 ### Eklendi
 - **Per-CCD sıcaklık göstergesi:** Per-core sıcaklık sensörü olmayan CPU'larda (ör. AMD Ryzen
   5 5600'ün LHM/SMU okuması yalnızca `Core (Tctl/Tdie)` ve `CCD1 (Tdie)` veriyor) "çekirdek"
-  bölümü artık boş kalmıyor; bölüm başlığı otomatik olarak "CCD SICAKLIKLARI" oluyor ve her
-  CCD'nin sıcaklığı (°C) kart biçiminde gösteriliyor. Per-core sıcaklık sensörü olan
-  sistemlerde hiçbir şey değişmez.
-- Sol üst köşede kar tanesi (❄) yerine **uygulama logosu** görseli gösteriliyor
-  (`Resources/app_logo.png`, 64×64).
-
-### Değişti
-- Uygulama ikonu yeni Gemini logosu ile yeniden üretildi ve tüm boyutlar için **DIB/BMP**
-  kayıtları (16…128 px) + **PNG** (256 px) içerecek şekilde düzeltildi → Windows/WPF artık
-  ikonu 256 px'ten küçültmek yerine doğru boyuttaki girişi kullanıyor; görev çubuğu ve başlık
-  çubuğu ikonu keskin görünüyor.
+  bölümü artık boş kalmıyor; "CCD SICAKLIKLARI" olarak her CCD'nin sıcaklığı (°C) kart biçiminde
+  gösteriliyor. Per-core sıcaklık sensörü olan sistemlerde davranış değişmedi.
 
 ## [v1.5-beta] - 2026-08-09
 
@@ -36,12 +49,11 @@ paketleri birlikte yayınlanır.
 ## [v1.3-beta] - 2026-08-09
 
 ### Değişti
-- Sol kenar çubuğu yerine **üst yatay gezinme çubuğu**: marka solda, sekmeler (Genel Bakış /
+- Sol kenar çubuğu yerine **üst yatay gezinme çubuğu**: markalar solda, sekmeler (Genel Bakış /
   Disk Sağlığı / Stress Test) soldan sağa diziliyor; alt bilgi notu pencere tabanına taşındı.
 
 ### Eklendi
-- `CpuDatabaseService` seed verisine **"Ryzen 5 5600"** kaydı (TjMax 90, SustainedMaxTemp 80) —
-  yerel referans veritabanında bu model için doğru eşleşme ve termal eşikler.
+- `CpuDatabaseService` seed verisine **"Ryzen 5 5600"** kaydı (TjMax 90, SustainedMaxTemp 80).
 
 ## [v1.2-beta] - 2026-08-09
 
@@ -52,8 +64,8 @@ paketleri birlikte yayınlanır.
 
 ### Eklendi
 - **PawnIO çekirdek sürücüsü otomatik kurulumu**: uygulama açılışında sürücü yoksa
-  `PawnIO_setup.exe -install` ile bir kez kurulur (requireAdministrator olduğu için ek UAC
-  çıkmaz); kurulum da sürücüyü kullanıcı onayıyla bir kez kurar.
+  `PawnIO_setup.exe -install` ile bir kez kurulur; kurulum da sürücüyü kullanıcı onayıyla bir
+  kez kurar.
 - Inno Setup dağıtımı + GitHub Actions otomatik sürüm (minor+1) akışı.
 
 ## [v1.0.0-beta] - ilk yayın

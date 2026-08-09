@@ -60,6 +60,7 @@ public class AiAdvisorService
         var suggestions = new List<string>();
         TrackTrend(status, suggestions);
         BuildStatusMessages(status, suggestions, temp.Value, tjMax, sustained);
+        BuildPreventiveAdvice(status, suggestions);
 
         var summary = status switch
         {
@@ -86,6 +87,23 @@ public class AiAdvisorService
             suggestions.Add($"Oturum boyunca sıcaklık {delta:0.0}°C arttı — kasa hava akışı ve fan temizliği kontrol edilmeli.");
         else if (delta <= -5)
             suggestions.Add("Sıcaklık oturum boyunca düşüyor — soğutma iyi durumda görünüyor.");
+    }
+
+    /// <summary>Isınmaması için önleyici bakım önerileri (duruma göre; aşırı durumlar zaten üstte ele alınıyor).</summary>
+    private static void BuildPreventiveAdvice(ThermalStatus status, List<string> suggestions)
+    {
+        switch (status)
+        {
+            case ThermalStatus.Healthy:
+                suggestions.Add("Önleyici bakım: termal macunu ~2-3 yılda bir yenile, kasa tozunu 6 ayda bir temizle, fan profili aktif kalsın.");
+                break;
+            case ThermalStatus.Warm:
+                suggestions.Add("Hafif ısınma — toz birikimi veya yetersiz kasa hava akışı olabilir; fan hızı ve hava akışını kontrol et.");
+                break;
+            case ThermalStatus.Caution:
+                suggestions.Add("Soğutucu (fan/AIO) yeterliliğini ve oda sıcaklığını gözden geçir; termal macun yenileme zamanı gelmiş olabilir.");
+                break;
+        }
     }
 
     private static void BuildStatusMessages(ThermalStatus status, List<string> suggestions,
