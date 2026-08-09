@@ -7,10 +7,10 @@ paketleri birlikte yayınlanır.
 ## [Unreleased] — v1.6-beta (yolda)
 
 ### Eklendi
-- **Per-çekirdek yük göstergesi:** Per-core sıcaklık sensörü olmayan CPU'larda (ör. AMD Ryzen
+- **Per-CCD sıcaklık göstergesi:** Per-core sıcaklık sensörü olmayan CPU'larda (ör. AMD Ryzen
   5 5600'ün LHM/SMU okuması yalnızca `Core (Tctl/Tdie)` ve `CCD1 (Tdie)` veriyor) "çekirdek"
-  bölümü artık boş kalmıyor; bölüm başlığı otomatik olarak "ÇEKİRDEK YÜKLERİ" oluyor ve her
-  çekirdek/özçekirdeğin anlık yükü (%) kart biçiminde gösteriliyor. Sıcaklık sensörü olan
+  bölümü artık boş kalmıyor; bölüm başlığı otomatik olarak "CCD SICAKLIKLARI" oluyor ve her
+  CCD'nin sıcaklığı (°C) kart biçiminde gösteriliyor. Per-core sıcaklık sensörü olan
   sistemlerde hiçbir şey değişmez.
 - Sol üst köşede kar tanesi (❄) yerine **uygulama logosu** görseli gösteriliyor
   (`Resources/app_logo.png`, 64×64).

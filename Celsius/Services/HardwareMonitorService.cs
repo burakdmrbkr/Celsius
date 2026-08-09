@@ -104,7 +104,12 @@ public sealed class HardwareMonitorService : IDisposable
                     // 0 okuyan sensörleri yoksay (bazı AMD anakartlarda SMU sıcaklık 0 döner)
                     if (!(s.Value is { } v) || v <= 0) break;
                     var name = s.Name;
-                    if (name.Contains("Tctl", StringComparison.OrdinalIgnoreCase) ||
+                    if (name.StartsWith("CCD", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // AMD: "CCD1 (Tdie)" → per-CCD sıcaklık
+                        snap.CcdTemps.Add(new CcdTempInfo(name.Split(' ')[0], v));
+                    }
+                    else if (name.Contains("Tctl", StringComparison.OrdinalIgnoreCase) ||
                         name.Contains("Tdie", StringComparison.OrdinalIgnoreCase) ||
                         name.Contains("Package", StringComparison.OrdinalIgnoreCase))
                     {
@@ -125,10 +130,6 @@ public sealed class HardwareMonitorService : IDisposable
                 case SensorType.Load:
                     if (s.Name.Contains("Total", StringComparison.OrdinalIgnoreCase))
                         snap.CpuLoad = s.Value;
-                    else if (s.Name.StartsWith("CPU Core", StringComparison.OrdinalIgnoreCase) &&
-                             !s.Name.Contains("Max", StringComparison.OrdinalIgnoreCase) &&
-                             s.Value is { } loadVal)
-                        snap.CoreLoads.Add(loadVal);
                     break;
 
                 case SensorType.Voltage:

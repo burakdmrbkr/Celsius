@@ -8,9 +8,8 @@ public class CoreTempItem
     public required string Label { get; init; }
     public double TjMax { get; init; }
     public double Temp { get; set; }
-    public bool ShowAsLoad { get; init; }
 
-    public string TempText => ShowAsLoad ? $"{Temp:0}%" : $"{Temp:0.0} °C";
+    public string TempText => $"{Temp:0.0} °C";
     public double Ratio => TjMax <= 0 ? 0 : Math.Clamp(Temp / TjMax, 0, 1);
 
     public Brush Color => Ratio switch

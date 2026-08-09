@@ -10,9 +10,9 @@ public class SensorSnapshot
     public string CpuName { get; init; } = "Bilinmiyor";
     public double? CpuPackageTemp { get; set; }
     public double? CpuMaxCoreTemp { get; set; }
-    public List<double> CoreTemps { get; init; } = new();
-    /// <summary>Çekirdek başına yük (%) — per-core sıcaklık sensörü olmayan CPU'larda kullanılır.</summary>
-    public List<double> CoreLoads { get; init; } = new();
+        public List<double> CoreTemps { get; init; } = new();
+    /// <summary>Per-CCD sıcaklıkları (AMD) — per-core sıcaklık sensörü olmayan CPU'larda kullanılır.</summary>
+    public List<CcdTempInfo> CcdTemps { get; init; } = new();
     public double? CpuLoad { get; set; }
     public double? GpuTemp { get; set; }
     public double? GpuLoad { get; set; }
@@ -23,3 +23,6 @@ public class SensorSnapshot
     /// <summary>Sıcaklık verisinin geldiği kaynak: "HWiNFO", "LibreHardwareMonitor" ya da boş.</summary>
     public string TempSource { get; set; } = "";
 }
+
+/// <summary>AMD'de per-CCD sıcaklık okuması (ör. "CCD1 (Tdie)" → Label "CCD1").</summary>
+public sealed record CcdTempInfo(string Label, double Temp);

@@ -53,7 +53,7 @@ public partial class DashboardViewModel : ObservableObject
             _ => "Sıcaklık kaynağı: yok — Secure Boot kapalıyken okunur"
         };
 
-        // Çekirdek listesi: per-core sıcaklık varsa sıcaklık göster; yoksa per-core yük göster.
+        // Çekirdek listesi: per-core sıcaklık varsa çekirdek, yoksa per-CCD sıcaklık göster.
         CoreTemps.Clear();
         if (snap.CoreTemps.Count > 0)
         {
@@ -62,11 +62,12 @@ public partial class DashboardViewModel : ObservableObject
             for (var i = 0; i < snap.CoreTemps.Count; i++)
                 CoreTemps.Add(new CoreTempItem { Label = $"Çekirdek {i + 1}", TjMax = tj, Temp = snap.CoreTemps[i] });
         }
-        else if (snap.CoreLoads.Count > 0)
+        else if (snap.CcdTemps.Count > 0)
         {
-            CoreSectionTitle = "ÇEKİRDEK YÜKLERİ";
-            for (var i = 0; i < snap.CoreLoads.Count; i++)
-                CoreTemps.Add(new CoreTempItem { Label = $"Çekirdek {i + 1}", TjMax = 100, Temp = snap.CoreLoads[i], ShowAsLoad = true });
+            CoreSectionTitle = "CCD SICAKLIKLARI";
+            var tj = model?.TjMax ?? (snap.CpuName.Contains("AMD", StringComparison.OrdinalIgnoreCase) ? 95 : 100);
+            foreach (var ccd in snap.CcdTemps)
+                CoreTemps.Add(new CoreTempItem { Label = ccd.Label, TjMax = tj, Temp = ccd.Temp });
         }
         else CoreSectionTitle = "ÇEKİRDEK SICAKLIKLARI";
 
