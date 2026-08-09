@@ -25,14 +25,20 @@ jobs:
         shell: bash
         run: |
           git fetch --tags --force
-          tag=$(git tag --list 'v[0-9]*[.-]beta' | sort -V | tail -n 1)
+          # Yalnızca geçerli sürüm etiketleri: v1.1-beta veya v1.1.0-beta (boş/v-beta hariç)
+          tag=$(git tag --list | grep -E '^v[0-9]+\.[0-9]+(\.[0-9]+)?-beta$' | sort -V | tail -n 1)
           if [ -z "$tag" ]; then
             new="1.1"
           else
             cur="${tag#v}"; cur="${cur%-beta}"
-            major="${cur%%.*}"; minor="${cur#*.}"
-            minor=$((minor + 1))
+            major="${cur%%.*}"
+            rest="${cur#*.}"
+            minor="${rest%%.*}"          # 1.1.0 → 1.1 (sondaki 0 atılır)
+            minor=$((10#$minor + 1))     # önde sıfır/güvenli aritmetik
             new="${major}.${minor}"
+          fi
+          if [ -z "${new}" ]; then
+            new="1.1"
           fi
           echo "version=${new}" >> "$GITHUB_OUTPUT"
           echo "Yeni sürüm: v${new}-beta (önceki etiket: ${tag:-yok})"
