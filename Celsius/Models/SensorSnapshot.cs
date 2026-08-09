@@ -11,6 +11,8 @@ public class SensorSnapshot
     public double? CpuPackageTemp { get; set; }
     public double? CpuMaxCoreTemp { get; set; }
     public List<double> CoreTemps { get; init; } = new();
+    /// <summary>Çekirdek başına yük (%) — per-core sıcaklık sensörü olmayan CPU'larda kullanılır.</summary>
+    public List<double> CoreLoads { get; init; } = new();
     public double? CpuLoad { get; set; }
     public double? GpuTemp { get; set; }
     public double? GpuLoad { get; set; }

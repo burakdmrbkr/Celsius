@@ -103,7 +103,7 @@
             <!-- Çekirdek sıcaklıkları -->
             <Border Style="{StaticResource Card}" Margin="0,16,0,0">
                 <StackPanel>
-                    <TextBlock Text="ÇEKİRDEK SICAKLIKLARI" Style="{StaticResource StatLabel}"/>
+                    <TextBlock Text="{Binding CoreSectionTitle}" Style="{StaticResource StatLabel}"/>
                     <ItemsControl ItemsSource="{Binding CoreTemps}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>

@@ -125,6 +125,10 @@ public sealed class HardwareMonitorService : IDisposable
                 case SensorType.Load:
                     if (s.Name.Contains("Total", StringComparison.OrdinalIgnoreCase))
                         snap.CpuLoad = s.Value;
+                    else if (s.Name.StartsWith("CPU Core", StringComparison.OrdinalIgnoreCase) &&
+                             !s.Name.Contains("Max", StringComparison.OrdinalIgnoreCase) &&
+                             s.Value is { } loadVal)
+                        snap.CoreLoads.Add(loadVal);
                     break;
 
                 case SensorType.Voltage:

@@ -27,6 +27,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\PawnIO_setup.exe" LogicalName="Celsius.Resources.PawnIO_setup.exe" />
     <Resource Include="Resources\app.ico" />
+    <Resource Include="Resources\app_logo.png" />
   </ItemGroup>
 
 </Project>

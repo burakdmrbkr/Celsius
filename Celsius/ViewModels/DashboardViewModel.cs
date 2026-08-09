@@ -24,6 +24,7 @@ public partial class DashboardViewModel : ObservableObject
     [ObservableProperty] private string _statusSuggestions = "";
     [ObservableProperty] private string _modelMatched = "";
     [ObservableProperty] private string _tempSourceText = "Sıcaklık kaynağı: bekleniyor…";
+    [ObservableProperty] private string _coreSectionTitle = "ÇEKİRDEK SICAKLIKLARI";
 
     public ObservableCollection<CoreTempItem> CoreTemps { get; } = new();
 
@@ -52,14 +53,22 @@ public partial class DashboardViewModel : ObservableObject
             _ => "Sıcaklık kaynağı: yok — Secure Boot kapalıyken okunur"
         };
 
-        // Çekirdek listesi
+        // Çekirdek listesi: per-core sıcaklık varsa sıcaklık göster; yoksa per-core yük göster.
         CoreTemps.Clear();
         if (snap.CoreTemps.Count > 0)
         {
+            CoreSectionTitle = "ÇEKİRDEK SICAKLIKLARI";
             var tj = model?.TjMax ?? (snap.CpuName.Contains("AMD", StringComparison.OrdinalIgnoreCase) ? 95 : 100);
             for (var i = 0; i < snap.CoreTemps.Count; i++)
                 CoreTemps.Add(new CoreTempItem { Label = $"Çekirdek {i + 1}", TjMax = tj, Temp = snap.CoreTemps[i] });
         }
+        else if (snap.CoreLoads.Count > 0)
+        {
+            CoreSectionTitle = "ÇEKİRDEK YÜKLERİ";
+            for (var i = 0; i < snap.CoreLoads.Count; i++)
+                CoreTemps.Add(new CoreTempItem { Label = $"Çekirdek {i + 1}", TjMax = 100, Temp = snap.CoreLoads[i], ShowAsLoad = true });
+        }
+        else CoreSectionTitle = "ÇEKİRDEK SICAKLIKLARI";
 
     }
 
