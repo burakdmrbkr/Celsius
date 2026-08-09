@@ -3,9 +3,11 @@
 [Oo]bj/
 *.user
 publish/
+publish-*/
 
 # Dağıtım paketleri
 *.zip
+dist/
 
 # Visual Studio
 .vs/

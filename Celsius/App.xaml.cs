@@ -22,6 +22,16 @@ public partial class App : Application
             args.Handled = true;
         };
 
+        // PawnIO ring0 sürücüsünü gerekirse otomatik kur — LHM sensörlerinden önce olmalı.
+        // (Kütüphane sürücüyü kendisi kurmaz; CPU sıcaklığı için zorunludur.)
+        if (!PawnIoDriverInstaller.EnsureInstalled())
+        {
+            MessageBox.Show(
+                "CPU sıcaklığı için gereken PawnIO sürücüsü kurulamadı. " +
+                "Sensörler sınırlı olabilir; uygulamayı 'Yönetici olarak çalıştır' ile tekrar açmayı deneyin.",
+                "Celsius", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+
         // Bağımlılıkları kur
         var cpuDb = new CpuDatabaseService();
         var hw = new HardwareMonitorService();

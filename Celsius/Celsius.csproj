@@ -9,9 +9,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AssemblyName>Celsius</AssemblyName>
     <RootNamespace>Celsius</RootNamespace>
-    <Version>1.1.0</Version>
-    <AssemblyVersion>1.1.0</AssemblyVersion>
-    <FileVersion>1.1.0</FileVersion>
+    <Version>1.1</Version>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
     <Company>burakdmrbkr</Company>
     <Product>Celsius</Product>
     <Description>AI destekli sıcaklık izleyici — akıllı işlemci ve disk sağlığı monitörü</Description>
@@ -21,6 +21,10 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.6" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\PawnIO_setup.exe" LogicalName="Celsius.Resources.PawnIO_setup.exe" />
   </ItemGroup>
 
 </Project>

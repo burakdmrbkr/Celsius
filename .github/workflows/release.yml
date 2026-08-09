@@ -1,0 +1,101 @@
+name: Auto Version & Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    name: Bump version & tag
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.ver.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compute next version (vX.Y-beta, minor +1)
+        id: ver
+        shell: bash
+        run: |
+          git fetch --tags --force
+          tag=$(git tag --list 'v[0-9]*[.-]beta' | sort -V | tail -n 1)
+          if [ -z "$tag" ]; then
+            new="1.1"
+          else
+            cur="${tag#v}"; cur="${cur%-beta}"
+            major="${cur%%.*}"; minor="${cur#*.}"
+            minor=$((minor + 1))
+            new="${major}.${minor}"
+          fi
+          echo "version=${new}" >> "$GITHUB_OUTPUT"
+          echo "Yeni sürüm: v${new}-beta (önceki etiket: ${tag:-yok})"
+
+      - name: Update csproj version
+        shell: bash
+        run: |
+          new="${{ steps.ver.outputs.version }}"
+          sed -i "s#<Version>[0-9.]*</Version>#<Version>${new}</Version>#" Celsius/Celsius.csproj
+          sed -i "s#<AssemblyVersion>[0-9.]*</AssemblyVersion>#<AssemblyVersion>${new}.0.0</AssemblyVersion>#" Celsius/Celsius.csproj
+          sed -i "s#<FileVersion>[0-9.]*</FileVersion>#<FileVersion>${new}.0.0</FileVersion>#" Celsius/Celsius.csproj
+
+      - name: Commit & push tag
+        shell: bash
+        run: |
+          new="${{ steps.ver.outputs.version }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Celsius/Celsius.csproj
+          if git diff --cached --quiet; then
+            echo "Sürüm zaten güncel (${new}) — commit atlandı, etiket oluşturuluyor"
+          else
+            git commit -m "v${new}-beta [skip ci]"
+            git push origin HEAD:main
+          fi
+          git tag "v${new}-beta"
+          git push origin "v${new}-beta"
+
+  release:
+    name: Build setup & release
+    needs: bump
+    if: ${{ !startsWith(github.event.head_commit.message, '[skip ci]') }}
+    runs-on: windows-latest
+    steps:
+      - name: Checkout tagged version
+        uses: actions/checkout@v4
+        with:
+          ref: v${{ needs.bump.outputs.version }}-beta
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
+
+      - name: Install Inno Setup
+        shell: pwsh
+        run: choco install innosetup -y --no-progress
+
+      - name: Publish self-contained single-file
+        shell: pwsh
+        run: dotnet publish Celsius/Celsius.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:DebugType=none -o publish-selfcontained
+
+      - name: Build setup (Inno)
+        shell: pwsh
+        run: |
+          $iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) { $iscc = (Get-ChildItem 'C:\Program Files*\Inno Setup*\ISCC.exe' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1).FullName }
+          & $iscc /DMyAppVersion="${{ needs.bump.outputs.version }}-beta" Celsius.iss
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.bump.outputs.version }}-beta
+          name: Celsius v${{ needs.bump.outputs.version }}-beta
+          files: dist/CelsiusSetup*.exe
+          generate_release_notes: true
