@@ -7,30 +7,38 @@
         Background="{StaticResource BgBrush}"
         Closing="Window_Closing">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="190"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <!-- Sol gezinme -->
-        <Border Background="{StaticResource CardAltBrush}"
-                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,1,0">
+        <!-- Üst gezinme çubuğu: marka + sekmeler (soldan sağa) -->
+        <Border Grid.Row="0" Background="{StaticResource CardAltBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
             <DockPanel>
-                <Border DockPanel.Dock="Top" Padding="18,20"
-                        BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
-                    <StackPanel>
-                        <TextBlock Text="❄" FontSize="20" Foreground="{StaticResource AccentBrush}"/>
+                <Border DockPanel.Dock="Left" Height="56" Padding="18,0"
+                        BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,1,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="❄" FontSize="18" Foreground="{StaticResource AccentBrush}"
+                                   VerticalAlignment="Center"/>
                         <TextBlock Text="Celsius" Foreground="{StaticResource TextBrush}"
-                                   FontSize="22" FontWeight="Bold"/>
-                        <TextBlock Text="Akıllı sıcaklık izleyici"
-                                   Foreground="{StaticResource MutedBrush}" FontSize="11"/>
+                                   FontSize="18" FontWeight="Bold" Margin="8,0,10,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="Akıllı sıcaklık izleyici" Foreground="{StaticResource MutedBrush}"
+                                   FontSize="11" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Border>
 
                 <ListBox ItemsSource="{Binding NavItems}"
                          SelectedIndex="{Binding SelectedNavIndex}"
-                         Background="Transparent" BorderThickness="0" Padding="8"
+                         Background="Transparent" BorderThickness="0" Padding="8,0"
+                         VerticalAlignment="Center"
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
@@ -39,10 +47,10 @@
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ListBoxItem">
                                         <Border x:Name="bd" Background="Transparent" CornerRadius="8"
-                                                Padding="12,10" Margin="0,2">
+                                                Padding="14,8" Margin="0,2,4,2">
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="{Binding Icon}" Foreground="{StaticResource AccentBrush}"
-                                                           FontSize="14" Width="22" VerticalAlignment="Center"/>
+                                                           FontSize="13" Width="20" VerticalAlignment="Center"/>
                                                 <TextBlock Text="{Binding Label}" FontSize="13" VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </Border>
@@ -61,16 +69,18 @@
                         </Style>
                     </ListBox.ItemContainerStyle>
                 </ListBox>
-
-                <Border DockPanel.Dock="Bottom" Padding="18,16"
-                        BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0">
-                    <TextBlock Text="Sensör verisi yerel okunur · Geçmiş saklanmaz · Yönetici modunda önerilir"
-                               Foreground="{StaticResource MutedBrush}" FontSize="10" TextWrapping="Wrap"/>
-                </Border>
             </DockPanel>
         </Border>
 
         <!-- İçerik -->
-        <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}" Focusable="False"/>
+        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" Focusable="False"/>
+
+        <!-- Alt not -->
+        <Border Grid.Row="2" Padding="16,8" Background="{StaticResource CardAltBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0">
+            <TextBlock Text="Sensör verisi yerel okunur · Geçmiş saklanmaz · Yönetici modunda önerilir"
+                       Foreground="{StaticResource MutedBrush}" FontSize="10" TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+        </Border>
     </Grid>
 </Window>

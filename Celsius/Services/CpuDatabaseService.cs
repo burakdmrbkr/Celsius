@@ -83,7 +83,8 @@ public class CpuDatabaseService
             ("AMD",   "Ryzen 9 5950X",   90, 80), ("AMD",   "Ryzen 9 5900X",   90, 80),
             ("AMD",   "Ryzen 7 5800X",   90, 80), ("AMD",   "Ryzen 7 5800X3D", 90, 80),
             ("AMD",   "Ryzen 7 5700X",   90, 80), ("AMD",   "Ryzen 5 5600X",   90, 80),
-            ("AMD",   "Ryzen 5 5600G",   90, 80), ("AMD",   "Ryzen 5 5500",    90, 80),
+            ("AMD",   "Ryzen 5 5600G",   90, 80), ("AMD",   "Ryzen 5 5600",    90, 80),
+            ("AMD",   "Ryzen 5 5500",    90, 80),
             // AMD — Zen2
             ("AMD",   "Ryzen 9 3950X",   95, 85), ("AMD",   "Ryzen 9 3900X",   95, 85),
             ("AMD",   "Ryzen 7 3800X",   95, 85), ("AMD",   "Ryzen 7 3700X",   95, 85),
