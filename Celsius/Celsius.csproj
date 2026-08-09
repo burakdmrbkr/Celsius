@@ -15,6 +15,7 @@
     <Company>burakdmrbkr</Company>
     <Product>Celsius</Product>
     <Description>AI destekli sıcaklık izleyici — akıllı işlemci ve disk sağlığı monitörü</Description>
+    <ApplicationIcon>Resources\app.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +26,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\PawnIO_setup.exe" LogicalName="Celsius.Resources.PawnIO_setup.exe" />
+    <Resource Include="Resources\app.ico" />
   </ItemGroup>
 
 </Project>
