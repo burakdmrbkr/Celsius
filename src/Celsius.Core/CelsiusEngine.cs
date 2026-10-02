@@ -61,6 +61,18 @@ public sealed class CelsiusEngine : IDisposable
     /// <summary>True when the backend produced at least one temperature sensor.</summary>
     public bool HasTemperatureSensors => _monitor.HasTemperatureSensors;
 
+    /// <summary>
+    /// Reason why temperatures may be unavailable (e.g. the PawnIO kernel driver
+    /// could not be loaded), or <c>null</c> when the backend is healthy.
+    /// </summary>
+    public string? SensorError => _monitor.LastError;
+
+    /// <summary>
+    /// True when the backend initialized but no temperature sensor produced a
+    /// value — the classic symptom of a missing/blocked kernel driver.
+    /// </summary>
+    public bool TemperaturesUnavailable => !HasTemperatureSensors;
+
     /// <summary>Initializes hardware access and resolves the thermal profile.</summary>
     public void Initialize()
     {

@@ -5,6 +5,8 @@
 [Ll]og/
 [Ll]ogs/
 publish/
+dist/
+vendor/
 *.binlog
 *.tlog
 

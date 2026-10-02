@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <AssemblyName>Celsius.Diag</AssemblyName>
+    <RootNamespace>Celsius.Diag</RootNamespace>
+    <!-- Not part of the shipped product; excluded from packaging/CI. -->
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Celsius.Core\Celsius.Core.csproj" />
+  </ItemGroup>
+
+</Project>

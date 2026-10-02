@@ -15,6 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -49,8 +50,24 @@
                        TextWrapping="Wrap" />
         </Border>
 
+        <!-- Sensor/driver warning -->
+        <Border x:Name="SensorWarningBorder"
+                Grid.Row="2"
+                Visibility="Collapsed"
+                Background="#2A1214"
+                BorderBrush="#B91C1C"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="10,8"
+                Margin="0,0,0,8">
+            <TextBlock x:Name="SensorWarningText"
+                       Foreground="#FCA5A5"
+                       FontSize="12"
+                       TextWrapping="Wrap" />
+        </Border>
+
         <!-- Scrollable metric list -->
-        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <TextBlock x:Name="CpuHeader" Style="{StaticResource SectionHeader}" />
                 <Border Style="{StaticResource Card}">
@@ -148,7 +165,7 @@
         </ScrollViewer>
 
         <!-- Actions -->
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
             <Button x:Name="SettingsButton" Click="OnSettingsClick" Margin="0,0,8,0" />
             <Button x:Name="StressButton" Style="{StaticResource PrimaryButton}" Click="OnStressClick" />
         </StackPanel>

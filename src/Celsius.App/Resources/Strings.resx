@@ -203,6 +203,9 @@
   <data name="AdminWarning" xml:space="preserve">
     <value>Running without elevation — temperature sensors may be unavailable.</value>
   </data>
+  <data name="SensorWarning" xml:space="preserve">
+    <value>Temperature sensors are unavailable. The PawnIO kernel driver could not be loaded. Make sure the app is running as administrator and that the PawnIO driver is installed (not blocked by your antivirus or the Windows vulnerable-driver blocklist).</value>
+  </data>
   <data name="ThermalSourceHardware" xml:space="preserve">
     <value>hardware</value>
   </data>

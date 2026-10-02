@@ -34,4 +34,11 @@ public interface IHardwareMonitor : IDisposable
 
     /// <summary>True when at least one temperature sensor could be read.</summary>
     bool HasTemperatureSensors { get; }
+
+    /// <summary>
+    /// Message of the last backend failure (typically the kernel driver failing
+    /// to load), or <c>null</c> when everything is healthy. Used to explain to
+    /// the user why temperatures may be missing.
+    /// </summary>
+    string? LastError { get; }
 }

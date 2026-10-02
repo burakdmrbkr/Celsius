@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!--
+      LibreHardwareMonitorLib 0.9.6 is the current release and already ships the
+      PawnIO-based sensor backend (it no longer relies on the legacy WinRing0
+      driver, which Windows' Vulnerable Driver Blocklist blocks on modern
+      builds). The PawnIO kernel driver itself is a separate system component
+      that must be installed on the machine — see docs/PAWNIO.md.
+    -->
     <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.6" />
     <PackageReference Include="System.Management" Version="10.0.12" />
     <PackageReference Include="Vortice.DXGI" Version="3.8.3" />

@@ -27,7 +27,6 @@ public sealed class HardwareMonitorService : IHardwareMonitor
 
     // Best-effort memory reading, refreshed periodically.
     private float? _lastMemoryPercent;
-    private readonly Dictionary<string, float> _lastCpuTemperatureByHardware = new(StringComparer.Ordinal);
 
     /// <summary>Creates the service with default providers.</summary>
     public HardwareMonitorService()
@@ -45,6 +44,12 @@ public sealed class HardwareMonitorService : IHardwareMonitor
     /// <inheritdoc />
     public bool HasTemperatureSensors { get; private set; }
 
+    /// <summary>
+    /// Message of the last failure raised by the backend (e.g. the kernel driver
+    /// could not be loaded). <c>null</c> when the last operation succeeded.
+    /// </summary>
+    public string? LastError { get; private set; }
+
     /// <inheritdoc />
     public void Initialize()
     {
@@ -61,8 +66,10 @@ public sealed class HardwareMonitorService : IHardwareMonitor
                 IsCpuEnabled = true,
                 IsGpuEnabled = true,
                 IsMemoryEnabled = true,
-                IsStorageEnabled = false,
-                IsMotherboardEnabled = false,
+                // Motherboard/SuperIO sensors are needed for board, DIMM and some
+                // laptop GPU thermals; storage is needed for NVMe temperature.
+                IsStorageEnabled = true,
+                IsMotherboardEnabled = true,
                 IsControllerEnabled = false,
                 IsNetworkEnabled = false,
                 IsBatteryEnabled = false,
@@ -73,10 +80,16 @@ public sealed class HardwareMonitorService : IHardwareMonitor
             {
                 _computer.Open();
                 _computer.Accept(_visitor);
-                HasTemperatureSensors = _computer.Hardware.Any(IsCpuHardware);
+
+                // "HasTemperatureSensors" must reflect that at least one CPU
+                // *temperature* sensor actually produced a value, not merely that
+                // a CPU hardware node exists (it always does, even when the
+                // kernel driver failed to load).
+                HasTemperatureSensors = HasAnyCpuTemperature();
             }
-            catch
+            catch (Exception ex)
             {
+                LastError = ex.Message;
                 HasTemperatureSensors = false;
             }
 
@@ -94,20 +107,45 @@ public sealed class HardwareMonitorService : IHardwareMonitor
                 return;
             }
 
+            // Clear before each pass so a recovered device stops reporting an
+            // error, while a failing one re-sets it below.
+            LastError = null;
+
             try
             {
                 foreach (var hardware in _computer.Hardware)
                 {
-                    hardware.Update();
+                    try
+                    {
+                        hardware.Update();
+                    }
+                    catch (Exception ex)
+                    {
+                        // One misbehaving device (e.g. a sensor backend that
+                        // throws) must not stop the others from updating.
+                        LastError = $"{hardware.Name}: {ex.Message}";
+                        continue;
+                    }
+
                     foreach (var sub in hardware.SubHardware)
                     {
-                        sub.Update();
+                        try
+                        {
+                            sub.Update();
+                        }
+                        catch (Exception ex)
+                        {
+                            LastError = $"{sub.Name}: {ex.Message}";
+                        }
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // A transient driver failure must not tear down the monitor.
+                // A failure enumerating the hardware tree must not tear down the
+                // monitor, but we surface it so the UI/log can explain missing
+                // values.
+                LastError = ex.Message;
             }
         }
     }
@@ -210,6 +248,7 @@ public sealed class HardwareMonitorService : IHardwareMonitor
         float? packageTemp = null;
         float? controlTemp = null;
         float? maxCoreTemp = null;
+        float? anyTemp = null;
         float? maxClock = null;
         float? maxLoad = null;
 
@@ -223,18 +262,28 @@ public sealed class HardwareMonitorService : IHardwareMonitor
             switch (sensor.SensorType)
             {
                 case SensorType.Temperature:
+                    // Track every plausible thermal reading so we can fall back to
+                    // *any* temperature when the usual names are absent (e.g. some
+                    // AMD/Intel SKUs expose only "Tccd" or vendor-specific names).
+                    if (IsPlausibleTemperature(value))
+                    {
+                        anyTemp = SelectHigher(anyTemp, value);
+                    }
+
                     var name = sensor.Name;
                     if (name.Contains("Package", StringComparison.OrdinalIgnoreCase)
-                        || name.Contains("Tctl", StringComparison.OrdinalIgnoreCase))
+                        || name.Contains("Tctl", StringComparison.OrdinalIgnoreCase)
+                        || name.Contains("CPU", StringComparison.OrdinalIgnoreCase))
                     {
-                        packageTemp ??= SelectHigher(packageTemp, value);
+                        packageTemp = SelectHigher(packageTemp, value);
                         if (name.Contains("Tctl", StringComparison.OrdinalIgnoreCase))
                         {
                             controlTemp = SelectHigher(controlTemp, value);
                         }
                     }
                     else if (name.Contains("Core", StringComparison.OrdinalIgnoreCase)
-                        || name.Contains("Tdie", StringComparison.OrdinalIgnoreCase))
+                        || name.Contains("Tdie", StringComparison.OrdinalIgnoreCase)
+                        || name.Contains("Tccd", StringComparison.OrdinalIgnoreCase))
                     {
                         maxCoreTemp = SelectHigher(maxCoreTemp, value);
                     }
@@ -260,7 +309,7 @@ public sealed class HardwareMonitorService : IHardwareMonitor
             }
         }
 
-        temp = packageTemp ?? controlTemp ?? maxCoreTemp;
+        temp = packageTemp ?? controlTemp ?? maxCoreTemp ?? anyTemp;
         clock = maxClock;
         load = maxLoad;
 
@@ -268,6 +317,42 @@ public sealed class HardwareMonitorService : IHardwareMonitor
         {
             HasTemperatureSensors = true;
         }
+    }
+
+    /// <summary>Filters out obviously bogus temperature values.</summary>
+    private static bool IsPlausibleTemperature(float value) => value is > 0f and < 150f;
+
+    /// <summary>
+    /// Returns true when at least one CPU temperature sensor currently yields a
+    /// plausible value. Unlike a mere presence check, this confirms the kernel
+    /// driver is actually working.
+    /// </summary>
+    private bool HasAnyCpuTemperature()
+    {
+        if (_computer is null)
+        {
+            return false;
+        }
+
+        foreach (var hardware in _computer.Hardware)
+        {
+            if (hardware.HardwareType != HardwareType.Cpu)
+            {
+                continue;
+            }
+
+            foreach (var sensor in hardware.Sensors)
+            {
+                if (sensor.SensorType == SensorType.Temperature
+                    && sensor.Value is { } value
+                    && IsPlausibleTemperature(value))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private static float? ReadMemoryPercent(IHardware memory)
@@ -298,6 +383,7 @@ public sealed class HardwareMonitorService : IHardwareMonitor
             }
 
             float? temp = null;
+            float? fallbackTemp = null;
             float? clock = null;
 
             foreach (var sensor in hardware.Sensors)
@@ -309,10 +395,33 @@ public sealed class HardwareMonitorService : IHardwareMonitor
 
                 switch (sensor.SensorType)
                 {
-                    case SensorType.Temperature
-                        when sensor.Name.Contains("Core", StringComparison.OrdinalIgnoreCase)
-                             || sensor.Name.Contains("GPU", StringComparison.OrdinalIgnoreCase):
-                        temp = SelectHigher(temp, value);
+                    case SensorType.Temperature:
+                        if (!IsPlausibleTemperature(value))
+                        {
+                            break;
+                        }
+
+                        // Prefer the core/edge sensor; keep any other plausible
+                        // reading as a fallback (e.g. "Hot Spot" only GPUs,
+                        // integrated adapters reporting just "GPU").
+                        if (sensor.Name.Contains("Core", StringComparison.OrdinalIgnoreCase)
+                            || sensor.Name.Contains("Edge", StringComparison.OrdinalIgnoreCase)
+                            || sensor.Name.Contains("GPU", StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (sensor.Name.Contains("Hot", StringComparison.OrdinalIgnoreCase))
+                            {
+                                fallbackTemp = SelectHigher(fallbackTemp, value);
+                            }
+                            else
+                            {
+                                temp = SelectHigher(temp, value);
+                            }
+                        }
+                        else
+                        {
+                            fallbackTemp = SelectHigher(fallbackTemp, value);
+                        }
+
                         break;
 
                     case SensorType.Clock
@@ -322,6 +431,8 @@ public sealed class HardwareMonitorService : IHardwareMonitor
                         break;
                 }
             }
+
+            temp ??= fallbackTemp;
 
             var vendor = MapHardwareVendor(hardware.HardwareType);
             var info = _gpuInfos.FirstOrDefault(g => g.Vendor == vendor);

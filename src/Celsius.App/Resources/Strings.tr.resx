@@ -151,6 +151,9 @@
   <data name="AdminWarning" xml:space="preserve">
     <value>Yönetici olarak çalışmıyor — sıcaklık sensörleri kullanılamayabilir.</value>
   </data>
+  <data name="SensorWarning" xml:space="preserve">
+    <value>Sıcaklık sensörleri kullanılamıyor. PawnIO çekirdek sürücüsü yüklenemedi. Uygulamanın yönetici olarak çalıştığından ve PawnIO sürücüsünün kurulu olduğundan emin olun (antivirüs veya Windows'un güvenlik açığı olan sürücü engel listesi tarafından engellenmemiş olmalı).</value>
+  </data>
   <data name="ThermalSourceHardware" xml:space="preserve">
     <value>donanım</value>
   </data>

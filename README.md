@@ -150,9 +150,18 @@ Logs (errors/critical only) are written to:
 ## Troubleshooting / FAQ
 
 **Temperature shows "—" or is missing.**
-Make sure you launched `Celsius.exe` **as administrator**. Without elevation the
-kernel driver cannot be loaded and temperature sensors stay unavailable. CPU
-load, clock, memory and disk should still work.
+Two things are required:
+
+1. Launch `Celsius.exe` **as administrator**. Without elevation the kernel
+   driver cannot be used and temperature sensors stay unavailable.
+2. Install the **PawnIO** kernel driver (see [docs/PAWNIO.md](docs/PAWNIO.md)).
+   LibreHardwareMonitor 0.9.6+ no longer uses the old WinRing0 driver (Windows
+   blocks it), so CPU/GPU temperatures now require PawnIO. If elevation is on
+   but temperatures are still missing while CPU model/clock/load, memory and
+   disk work, the driver is the cause — Celsius shows an on-screen warning in
+   that case.
+
+CPU load, clock, memory, disk and GPU *names* work without the driver.
 
 **Some sensors are unavailable on my laptop.**
 Discrete laptop GPUs are often powered down when idle. Celsius shows "—" instead

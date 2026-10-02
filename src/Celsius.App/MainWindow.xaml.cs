@@ -34,7 +34,16 @@ public partial class MainWindow : Window
         UpdateThermalDisplay();
         RenderSnapshot(App.SnapshotProvider.Current);
 
-        AdminWarningBorder.Visibility = IsElevated() ? Visibility.Collapsed : Visibility.Visible;
+        var elevated = IsElevated();
+        AdminWarningBorder.Visibility = elevated ? Visibility.Collapsed : Visibility.Visible;
+
+        // If we're elevated but still have no temperature sensors, the kernel
+        // driver (PawnIO) is almost certainly missing or blocked — show the
+        // explicit sensor warning so the user isn't left wondering.
+        var sensorsMissing = !App.Engine.HasTemperatureSensors;
+        SensorWarningBorder.Visibility = elevated && sensorsMissing
+            ? Visibility.Visible
+            : Visibility.Collapsed;
     }
 
     private void OnClosed(object? sender, EventArgs e)
@@ -59,6 +68,7 @@ public partial class MainWindow : Window
         MemoryLabel.Text = LocalizationManager.Get("MemoryUsed");
 
         AdminWarningText.Text = LocalizationManager.Get("AdminWarning");
+        SensorWarningText.Text = LocalizationManager.Get("SensorWarning");
         StressButton.Content = LocalizationManager.Get("StressTestButton");
         SettingsButton.Content = LocalizationManager.Get("SettingsButton");
 
