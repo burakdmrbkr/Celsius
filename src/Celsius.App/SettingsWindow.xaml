@@ -1,0 +1,44 @@
+<Window x:Class="Celsius.App.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Settings"
+        Width="420"
+        SizeToContent="Height"
+        ResizeMode="NoResize"
+        Background="{StaticResource BackgroundBrush}"
+        WindowStartupLocation="CenterOwner">
+
+    <StackPanel Margin="20">
+        <TextBlock x:Name="SettingsTitle" FontSize="20" FontWeight="Bold"
+                   Foreground="{StaticResource AccentBrush}" Margin="0,0,0,16" />
+
+        <!-- Language -->
+        <TextBlock x:Name="LanguageLabel" Style="{StaticResource MetricLabel}" />
+        <ComboBox x:Name="LanguageCombo" Margin="0,4,0,14" SelectionChanged="OnLanguageChanged" />
+
+        <!-- Poll interval -->
+        <TextBlock x:Name="PollLabel" Style="{StaticResource MetricLabel}" />
+        <TextBox x:Name="PollBox" Margin="0,4,0,14" />
+
+        <!-- Default duration -->
+        <TextBlock x:Name="DefaultDurationLabel" Style="{StaticResource MetricLabel}" />
+        <TextBox x:Name="DefaultDurationBox" Margin="0,4,0,14" />
+
+        <!-- Worker count -->
+        <TextBlock x:Name="WorkerLabel" Style="{StaticResource MetricLabel}" />
+        <TextBox x:Name="WorkerBox" Margin="0,4,0,14" />
+
+        <!-- Close behavior -->
+        <TextBlock x:Name="CloseBehaviorLabel" Style="{StaticResource MetricLabel}" />
+        <StackPanel Margin="0,6,0,0">
+            <RadioButton x:Name="CloseTrayRadio" GroupName="CloseBehavior" Content="Tray" />
+            <RadioButton x:Name="CloseExitRadio" GroupName="CloseBehavior" Content="Exit" Margin="0,4,0,0" />
+        </StackPanel>
+
+        <!-- Actions -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button x:Name="CancelButton" Click="OnCancelClick" Margin="0,0,8,0" />
+            <Button x:Name="SaveButton" Style="{StaticResource PrimaryButton}" Click="OnSaveClick" />
+        </StackPanel>
+    </StackPanel>
+</Window>

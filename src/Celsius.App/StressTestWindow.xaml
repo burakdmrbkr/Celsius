@@ -1,0 +1,105 @@
+<Window x:Class="Celsius.App.StressTestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:Celsius.App.Controls"
+        Title="CPU Stress Test"
+        Width="520"
+        Height="600"
+        MinWidth="460"
+        MinHeight="520"
+        Background="{StaticResource BackgroundBrush}"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResize">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Duration selection -->
+        <Border Grid.Row="0" Style="{StaticResource Card}">
+            <StackPanel>
+                <TextBlock x:Name="DurationLabel" Style="{StaticResource SectionHeader}" Margin="0,0,0,8" />
+
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton x:Name="Dur1" Content="1" GroupName="Duration" Checked="OnDurationPresetChanged" />
+                    <RadioButton x:Name="Dur2" Content="2" GroupName="Duration" Checked="OnDurationPresetChanged" />
+                    <RadioButton x:Name="Dur3" Content="3" GroupName="Duration" Checked="OnDurationPresetChanged" />
+                    <RadioButton x:Name="Dur5" Content="5" GroupName="Duration" Checked="OnDurationPresetChanged" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <TextBlock x:Name="CustomLabel" Style="{StaticResource MetricLabel}" Width="140" />
+                    <TextBox x:Name="CustomMinutesBox" Width="80" TextChanged="OnCustomMinutesChanged" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Controls + stats -->
+        <Border Grid.Row="1" Style="{StaticResource Card}">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="StartButton" Style="{StaticResource PrimaryButton}" Click="OnStartClick" Margin="0,0,8,0" />
+                    <Button x:Name="StopButton" Click="OnStopClick" />
+                </StackPanel>
+
+                <Grid Margin="0,12,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock x:Name="ElapsedLabel" Style="{StaticResource MetricLabel}" />
+                        <TextBlock x:Name="ElapsedValue" Style="{StaticResource MetricValue}" HorizontalAlignment="Left" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock x:Name="RemainingLabel" Style="{StaticResource MetricLabel}" />
+                        <TextBlock x:Name="RemainingValue" Style="{StaticResource MetricValue}" HorizontalAlignment="Left" />
+                    </StackPanel>
+                </Grid>
+
+                <Grid Margin="0,12,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock x:Name="CurrentTempLabel" Style="{StaticResource MetricLabel}" />
+                        <TextBlock x:Name="CurrentTempValue" Style="{StaticResource MetricValue}" HorizontalAlignment="Left"
+                                   Foreground="{Binding Converter={StaticResource TemperatureBrush}}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock x:Name="MaxLabel" Style="{StaticResource MetricLabel}" />
+                        <TextBlock x:Name="MaxValue" Style="{StaticResource MetricValue}" HorizontalAlignment="Left" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock x:Name="MinLabel" Style="{StaticResource MetricLabel}" />
+                        <TextBlock x:Name="MinValue" Style="{StaticResource MetricValue}" HorizontalAlignment="Left" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="3">
+                        <TextBlock x:Name="AvgLabel" Style="{StaticResource MetricLabel}" />
+                        <TextBlock x:Name="AvgValue" Style="{StaticResource MetricValue}" HorizontalAlignment="Left" />
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- Chart -->
+        <Border Grid.Row="2" Style="{StaticResource Card}" Padding="0">
+            <controls:SimpleChart x:Name="Chart"
+                                  Minimum="20"
+                                  Maximum="110"
+                                  ClipToBounds="True" />
+        </Border>
+
+        <!-- Footer -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <Button x:Name="CloseButton" Click="OnCloseClick" />
+        </StackPanel>
+    </Grid>
+</Window>

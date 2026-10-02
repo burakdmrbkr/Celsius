@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Celsius.App/Celsius.App.csproj" />
+    <Project Path="src/Celsius.Core/Celsius.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Celsius.Core.Tests/Celsius.Core.Tests.csproj" />
+  </Folder>
+</Solution>

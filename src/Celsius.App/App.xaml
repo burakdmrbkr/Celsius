@@ -1,0 +1,18 @@
+﻿<Application x:Class="Celsius.App.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Celsius.App"
+             xmlns:conv="clr-namespace:Celsius.App.Converters">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/DarkTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <conv:SensorValueConverter x:Key="DegreesConverter" Unit="°C" Decimals="0" />
+            <conv:SensorValueConverter x:Key="PercentConverter" Unit="%" Decimals="0" />
+            <conv:SensorValueConverter x:Key="MhzConverter" Unit="MHz" Decimals="0" />
+            <conv:TemperatureBrushConverter x:Key="TemperatureBrush" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

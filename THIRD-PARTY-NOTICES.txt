@@ -1,0 +1,63 @@
+# Third-Party Notices
+
+Celsius is distributed under the MIT License (see `LICENSE`). It depends on the
+following third-party components, which are provided under their own licenses.
+
+---
+
+## LibreHardwareMonitorLib
+
+- **Used for:** Reading CPU/GPU temperature, clocks, loads, RAM and storage sensors.
+- **NuGet:** `LibreHardwareMonitorLib` 0.9.6
+- **Project:** https://github.com/LibreHardwareMonitor/LibreHardwareMonitor
+- **License:** Mozilla Public License 2.0 (MPL-2.0)
+
+LibreHardwareMonitorLib is licensed under the MPL-2.0. Celsius links against it
+unmodified and does not distribute modified copies of its source files. Per the
+MPL-2.0, the source of any modified files of the library would have to be made
+available; Celsius does not modify them.
+
+> **Kernel driver notice:** To read certain low-level sensors (including CPU
+> package temperature), LibreHardwareMonitor loads a signed kernel-mode driver
+> (currently **PawnIO**). This is why Celsius requests administrator privileges.
+> Some anti-cheat or security software may flag kernel driver usage.
+
+---
+
+## Vortice.DXGI
+
+- **Used for:** Enumerating physical graphics adapters and reading correct VRAM
+  sizes and vendor IDs (DXGI 1.x).
+- **NuGet:** `Vortice.DXGI` 3.8.3
+- **Project:** https://github.com/amerkoleci/Vortice.Windows
+- **License:** MIT
+
+---
+
+## H.NotifyIcon.Wpf
+
+- **Used for:** System tray icon and notification support in the WPF app.
+- **NuGet:** `H.NotifyIcon.Wpf` 2.4.1
+- **Project:** https://github.com/HavenDV/H.NotifyIcon
+- **License:** MIT
+
+---
+
+## System.Management
+
+- **Used for:** Querying CPU information via WMI (`Win32_Processor`).
+- **NuGet:** `System.Management` 10.0.12
+- **Project:** https://github.com/dotnet/runtime
+- **License:** MIT
+
+---
+
+## CPU TjMax reference data
+
+- The bundled `cpu-tjmax.json` lookup contains maximum-temperature values
+  compiled from publicly published vendor specifications:
+  - Intel product specifications: https://www.intel.com/content/www/us/en/products/details/processors.html
+  - Intel temperature support article: https://www.intel.com/content/www/us/en/support/articles/000005597/processors.html
+  - AMD product specifications: https://www.amd.com/en/products/processors.html
+- This data is provided for informational purposes; always consult the official
+  vendor documentation for your exact processor model.

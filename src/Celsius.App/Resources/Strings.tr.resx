@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="CpuSection" xml:space="preserve">
+    <value>İşlemci</value>
+  </data>
+  <data name="MemorySection" xml:space="preserve">
+    <value>Bellek</value>
+  </data>
+  <data name="StorageSection" xml:space="preserve">
+    <value>Depolama</value>
+  </data>
+  <data name="GpuSection" xml:space="preserve">
+    <value>Ekran Kartı</value>
+  </data>
+  <data name="CpuTemperature" xml:space="preserve">
+    <value>CPU Sıcaklığı</value>
+  </data>
+  <data name="CpuClock" xml:space="preserve">
+    <value>CPU Frekansı</value>
+  </data>
+  <data name="CpuLoad" xml:space="preserve">
+    <value>CPU Kullanımı</value>
+  </data>
+  <data name="MemoryUsed" xml:space="preserve">
+    <value>Bellek Kullanımı</value>
+  </data>
+  <data name="GpuTemperature" xml:space="preserve">
+    <value>GPU Sıcaklığı</value>
+  </data>
+  <data name="GpuClock" xml:space="preserve">
+    <value>GPU Frekansı</value>
+  </data>
+  <data name="ThermalLimit" xml:space="preserve">
+    <value>Termal Limit</value>
+  </data>
+  <data name="StopThreshold" xml:space="preserve">
+    <value>Stres Durdurma Eşiği</value>
+  </data>
+  <data name="StressTestButton" xml:space="preserve">
+    <value>Stres Testi…</value>
+  </data>
+  <data name="SettingsButton" xml:space="preserve">
+    <value>Ayarlar…</value>
+  </data>
+  <data name="StressTestTitle" xml:space="preserve">
+    <value>CPU Stres Testi</value>
+  </data>
+  <data name="DurationLabel" xml:space="preserve">
+    <value>Süre</value>
+  </data>
+  <data name="CustomMinutesLabel" xml:space="preserve">
+    <value>Özel (dakika)</value>
+  </data>
+  <data name="StartButton" xml:space="preserve">
+    <value>Başlat</value>
+  </data>
+  <data name="StopButton" xml:space="preserve">
+    <value>Durdur</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="ElapsedLabel" xml:space="preserve">
+    <value>Geçen</value>
+  </data>
+  <data name="RemainingLabel" xml:space="preserve">
+    <value>Kalan</value>
+  </data>
+  <data name="MaxTempLabel" xml:space="preserve">
+    <value>En Yüksek</value>
+  </data>
+  <data name="MinTempLabel" xml:space="preserve">
+    <value>En Düşük</value>
+  </data>
+  <data name="AvgTempLabel" xml:space="preserve">
+    <value>Ortalama</value>
+  </data>
+  <data name="StressWarningTitle" xml:space="preserve">
+    <value>CPU stres testi çalıştırılsın mı?</value>
+  </data>
+  <data name="StressWarningBody" xml:space="preserve">
+    <value>Bu test tüm CPU çekirdeklerini %100 yüke sokar ve işlemcinizi ısıtır. Test, termal limitte otomatik olarak durur. Yetersiz soğutmaya sahip bir sistemde çalıştırmayın.</value>
+  </data>
+  <data name="StressSummaryTitle" xml:space="preserve">
+    <value>Stres testi tamamlandı</value>
+  </data>
+  <data name="StopReasonCompleted" xml:space="preserve">
+    <value>İstenen süre tamamlandı.</value>
+  </data>
+  <data name="StopReasonUserStopped" xml:space="preserve">
+    <value>Kullanıcı tarafından durduruldu.</value>
+  </data>
+  <data name="StopReasonThermal" xml:space="preserve">
+    <value>Otomatik durduruldu: termal limite ulaşıldı.</value>
+  </data>
+  <data name="StopReasonError" xml:space="preserve">
+    <value>Bir hata nedeniyle durduruldu.</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Ayarlar</value>
+  </data>
+  <data name="PollIntervalLabel" xml:space="preserve">
+    <value>Ölçüm aralığı (saniye)</value>
+  </data>
+  <data name="DefaultDurationLabel" xml:space="preserve">
+    <value>Varsayılan stres süresi (dakika)</value>
+  </data>
+  <data name="WorkerCountLabel" xml:space="preserve">
+    <value>Stres iş parçacığı sayısı (0 = tüm çekirdekler)</value>
+  </data>
+  <data name="CloseBehaviorLabel" xml:space="preserve">
+    <value>Pencere kapatıldığında</value>
+  </data>
+  <data name="CloseBehaviorTray" xml:space="preserve">
+    <value>Tepsiye küçült</value>
+  </data>
+  <data name="CloseBehaviorExit" xml:space="preserve">
+    <value>Uygulamadan çık</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="CancelButton" xml:space="preserve">
+    <value>İptal</value>
+  </data>
+  <data name="TrayShow" xml:space="preserve">
+    <value>Celsius'u Göster</value>
+  </data>
+  <data name="TrayStressTest" xml:space="preserve">
+    <value>Stres Testi…</value>
+  </data>
+  <data name="TrayExit" xml:space="preserve">
+    <value>Çıkış</value>
+  </data>
+  <data name="NoSensorData" xml:space="preserve">
+    <value>Sensör verisi yok.</value>
+  </data>
+  <data name="AdminWarning" xml:space="preserve">
+    <value>Yönetici olarak çalışmıyor — sıcaklık sensörleri kullanılamayabilir.</value>
+  </data>
+  <data name="ThermalSourceHardware" xml:space="preserve">
+    <value>donanım</value>
+  </data>
+  <data name="ThermalSourceTable" xml:space="preserve">
+    <value>spesifikasyon tablosu</value>
+  </data>
+  <data name="ThermalSourceDefault" xml:space="preserve">
+    <value>varsayılan</value>
+  </data>
+  <data name="LanguageLabel" xml:space="preserve">
+    <value>Dil</value>
+  </data>
+  <data name="LanguageSystem" xml:space="preserve">
+    <value>Sistem varsayılanı</value>
+  </data>
+  <data name="LanguageEnglish" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="LanguageTurkish" xml:space="preserve">
+    <value>Türkçe</value>
+  </data>
+</root>

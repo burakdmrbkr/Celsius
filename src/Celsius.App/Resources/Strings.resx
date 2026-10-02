@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="AppTitle" xml:space="preserve">
+    <value>Celsius</value>
+  </data>
+  <data name="CpuSection" xml:space="preserve">
+    <value>Processor</value>
+  </data>
+  <data name="MemorySection" xml:space="preserve">
+    <value>Memory</value>
+  </data>
+  <data name="StorageSection" xml:space="preserve">
+    <value>Storage</value>
+  </data>
+  <data name="GpuSection" xml:space="preserve">
+    <value>Graphics</value>
+  </data>
+  <data name="CpuTemperature" xml:space="preserve">
+    <value>CPU Temperature</value>
+  </data>
+  <data name="CpuClock" xml:space="preserve">
+    <value>CPU Clock</value>
+  </data>
+  <data name="CpuLoad" xml:space="preserve">
+    <value>CPU Load</value>
+  </data>
+  <data name="MemoryUsed" xml:space="preserve">
+    <value>Memory Used</value>
+  </data>
+  <data name="GpuTemperature" xml:space="preserve">
+    <value>GPU Temperature</value>
+  </data>
+  <data name="GpuClock" xml:space="preserve">
+    <value>GPU Clock</value>
+  </data>
+  <data name="ThermalLimit" xml:space="preserve">
+    <value>Thermal Limit</value>
+  </data>
+  <data name="StopThreshold" xml:space="preserve">
+    <value>Stress Stop Threshold</value>
+  </data>
+  <data name="ValueUnavailable" xml:space="preserve">
+    <value>—</value>
+  </data>
+  <data name="StressTestButton" xml:space="preserve">
+    <value>Stress Test…</value>
+  </data>
+  <data name="SettingsButton" xml:space="preserve">
+    <value>Settings…</value>
+  </data>
+  <data name="StressTestTitle" xml:space="preserve">
+    <value>CPU Stress Test</value>
+  </data>
+  <data name="DurationLabel" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="CustomMinutesLabel" xml:space="preserve">
+    <value>Custom (minutes)</value>
+  </data>
+  <data name="StartButton" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="StopButton" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ElapsedLabel" xml:space="preserve">
+    <value>Elapsed</value>
+  </data>
+  <data name="RemainingLabel" xml:space="preserve">
+    <value>Remaining</value>
+  </data>
+  <data name="MaxTempLabel" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="MinTempLabel" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="AvgTempLabel" xml:space="preserve">
+    <value>Average</value>
+  </data>
+  <data name="StressWarningTitle" xml:space="preserve">
+    <value>Run CPU stress test?</value>
+  </data>
+  <data name="StressWarningBody" xml:space="preserve">
+    <value>This test drives all CPU cores to 100% load and will heat up your processor. The test stops automatically at the thermal limit. Do not run it on a system with inadequate cooling.</value>
+  </data>
+  <data name="StressSummaryTitle" xml:space="preserve">
+    <value>Stress test finished</value>
+  </data>
+  <data name="StopReasonCompleted" xml:space="preserve">
+    <value>Completed the requested duration.</value>
+  </data>
+  <data name="StopReasonUserStopped" xml:space="preserve">
+    <value>Stopped by the user.</value>
+  </data>
+  <data name="StopReasonThermal" xml:space="preserve">
+    <value>Stopped automatically: thermal limit reached.</value>
+  </data>
+  <data name="StopReasonError" xml:space="preserve">
+    <value>Stopped because of an error.</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="PollIntervalLabel" xml:space="preserve">
+    <value>Polling interval (seconds)</value>
+  </data>
+  <data name="DefaultDurationLabel" xml:space="preserve">
+    <value>Default stress duration (minutes)</value>
+  </data>
+  <data name="WorkerCountLabel" xml:space="preserve">
+    <value>Stress worker threads (0 = all cores)</value>
+  </data>
+  <data name="CloseBehaviorLabel" xml:space="preserve">
+    <value>When closing the window</value>
+  </data>
+  <data name="CloseBehaviorTray" xml:space="preserve">
+    <value>Minimize to tray</value>
+  </data>
+  <data name="CloseBehaviorExit" xml:space="preserve">
+    <value>Exit application</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="CancelButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="TrayShow" xml:space="preserve">
+    <value>Show Celsius</value>
+  </data>
+  <data name="TrayStressTest" xml:space="preserve">
+    <value>Stress Test…</value>
+  </data>
+  <data name="TrayExit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="NoSensorData" xml:space="preserve">
+    <value>No sensor data available.</value>
+  </data>
+  <data name="AdminWarning" xml:space="preserve">
+    <value>Running without elevation — temperature sensors may be unavailable.</value>
+  </data>
+  <data name="ThermalSourceHardware" xml:space="preserve">
+    <value>hardware</value>
+  </data>
+  <data name="ThermalSourceTable" xml:space="preserve">
+    <value>spec table</value>
+  </data>
+  <data name="ThermalSourceDefault" xml:space="preserve">
+    <value>default</value>
+  </data>
+  <data name="LanguageLabel" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LanguageSystem" xml:space="preserve">
+    <value>System default</value>
+  </data>
+  <data name="LanguageEnglish" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="LanguageTurkish" xml:space="preserve">
+    <value>Türkçe</value>
+  </data>
+</root>

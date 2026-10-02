@@ -1,0 +1,156 @@
+﻿<Window x:Class="Celsius.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Celsius.App"
+        Title="Celsius"
+        Width="440"
+        Height="680"
+        MinWidth="380"
+        MinHeight="480"
+        Background="{StaticResource BackgroundBrush}"
+        WindowStartupLocation="CenterScreen"
+        Closing="OnClosing">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="4,0,4,8">
+            <TextBlock Text="Celsius"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="{StaticResource AccentBrush}" />
+            <TextBlock x:Name="CpuNameText"
+                       Margin="12,0,0,0"
+                       VerticalAlignment="Bottom"
+                       Foreground="{StaticResource TextMutedBrush}"
+                       FontSize="12"
+                       TextTrimming="CharacterEllipsis" />
+        </StackPanel>
+
+        <!-- Admin warning -->
+        <Border x:Name="AdminWarningBorder"
+                Grid.Row="1"
+                Visibility="Collapsed"
+                Background="#2A1E12"
+                BorderBrush="#B45309"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="10,8"
+                Margin="0,0,0,8">
+            <TextBlock x:Name="AdminWarningText"
+                       Foreground="#FCD34D"
+                       FontSize="12"
+                       TextWrapping="Wrap" />
+        </Border>
+
+        <!-- Scrollable metric list -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock x:Name="CpuHeader" Style="{StaticResource SectionHeader}" />
+                <Border Style="{StaticResource Card}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock x:Name="CpuTempLabel" Grid.Row="0" Grid.Column="0" Style="{StaticResource MetricLabel}" />
+                        <TextBlock x:Name="CpuTempValue" Grid.Row="0" Grid.Column="1" Style="{StaticResource MetricValue}"
+                                   Foreground="{Binding CpuTemperatureC, Converter={StaticResource TemperatureBrush}}" />
+
+                        <TextBlock x:Name="CpuClockLabel" Grid.Row="1" Grid.Column="0" Style="{StaticResource MetricLabel}" Margin="0,6,0,0" />
+                        <TextBlock x:Name="CpuClockValue" Grid.Row="1" Grid.Column="1" Style="{StaticResource MetricValue}" Margin="0,6,0,0" />
+
+                        <TextBlock x:Name="CpuLoadLabel" Grid.Row="2" Grid.Column="0" Style="{StaticResource MetricLabel}" Margin="0,6,0,0" />
+                        <TextBlock x:Name="CpuLoadValue" Grid.Row="2" Grid.Column="1" Style="{StaticResource MetricValue}" Margin="0,6,0,0" />
+
+                        <TextBlock x:Name="ThermalLabel" Grid.Row="3" Grid.Column="0" Style="{StaticResource MetricLabel}" Margin="0,6,0,0" />
+                        <TextBlock x:Name="ThermalValue" Grid.Row="3" Grid.Column="1" Style="{StaticResource MetricValue}" Margin="0,6,0,0" FontSize="13" />
+                    </Grid>
+                </Border>
+
+                <TextBlock x:Name="MemoryHeader" Style="{StaticResource SectionHeader}" />
+                <Border Style="{StaticResource Card}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="MemoryLabel" Style="{StaticResource MetricLabel}" />
+                        <TextBlock x:Name="MemoryValue" Grid.Column="1" Style="{StaticResource MetricValue}" />
+                    </Grid>
+                </Border>
+
+                <TextBlock x:Name="StorageHeader" Style="{StaticResource SectionHeader}" />
+                <ItemsControl x:Name="DriveList">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource Card}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource MetricLabel}" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="1" Style="{StaticResource MetricValue}"
+                                               Text="{Binding UsedPercent, Converter={StaticResource PercentConverter}}" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <TextBlock x:Name="GpuHeader" Style="{StaticResource SectionHeader}" />
+                <ItemsControl x:Name="GpuList">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" Foreground="{StaticResource TextBrush}"
+                                               FontWeight="SemiBold" FontSize="13" TextTrimming="CharacterEllipsis" />
+                                    <Grid Margin="0,6,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock x:Name="GpuTempRowLabel" Style="{StaticResource MetricLabel}" Text="{Binding TempLabel}" />
+                                        <TextBlock Grid.Column="1" Style="{StaticResource MetricValue}"
+                                                   Foreground="{Binding TemperatureC, Converter={StaticResource TemperatureBrush}}"
+                                                   Text="{Binding TemperatureC, Converter={StaticResource DegreesConverter}}" />
+                                    </Grid>
+                                    <Grid Margin="0,6,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Style="{StaticResource MetricLabel}" Text="{Binding ClockLabel}" />
+                                        <TextBlock Grid.Column="1" Style="{StaticResource MetricValue}"
+                                                   Text="{Binding ClockMhz, Converter={StaticResource MhzConverter}}" />
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Actions -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <Button x:Name="SettingsButton" Click="OnSettingsClick" Margin="0,0,8,0" />
+            <Button x:Name="StressButton" Style="{StaticResource PrimaryButton}" Click="OnStressClick" />
+        </StackPanel>
+    </Grid>
+</Window>
