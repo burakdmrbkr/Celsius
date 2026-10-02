@@ -10,13 +10,13 @@
 
   <ItemGroup>
     <!--
-      LibreHardwareMonitorLib 0.9.6 is the current release and already ships the
-      PawnIO-based sensor backend (it no longer relies on the legacy WinRing0
-      driver, which Windows' Vulnerable Driver Blocklist blocks on modern
-      builds). The PawnIO kernel driver itself is a separate system component
-      that must be installed on the machine — see docs/PAWNIO.md.
+      Patched LibreHardwareMonitorLib (0.9.6-celsius1). Upstream 0.9.6 crashes in
+      SMBios.GetDate when a board reports an invalid BIOS date such as
+      "00/00/0000": new DateTime(year, 0, 0) throws and aborts the whole
+      Computer.Open(), so NO sensors work. The patch rejects month/day < 1.
+      See tools/lhm-patch/. Remove once the fix lands in a published release.
     -->
-    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.6" />
+    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.6-celsius1" />
     <PackageReference Include="System.Management" Version="10.0.12" />
     <PackageReference Include="Vortice.DXGI" Version="3.8.3" />
   </ItemGroup>

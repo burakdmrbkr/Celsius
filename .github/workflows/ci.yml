@@ -28,6 +28,10 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
+      - name: Build patched LibreHardwareMonitorLib
+        shell: pwsh
+        run: ./tools/lhm-patch/build-patched-lhm.ps1
+
       - name: Restore
         run: dotnet restore Celsius.slnx
 

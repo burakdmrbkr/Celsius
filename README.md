@@ -78,6 +78,10 @@ Requires the **.NET 10 SDK**.
 git clone https://github.com/burakdmrbkr/Celsius.git
 cd Celsius
 
+# Build the patched LibreHardwareMonitorLib NuGet package (see tools/lhm-patch/).
+# Required: Celsius consumes it from the local-nuget feed.
+pwsh -File tools/lhm-patch/build-patched-lhm.ps1
+
 dotnet build Celsius.slnx -c Release
 dotnet test  Celsius.slnx -c Release
 
@@ -89,6 +93,12 @@ dotnet publish src/Celsius.App/Celsius.App.csproj `
   -c Release -r win-x64 --self-contained true `
   -p:PublishSingleFile=true -o publish
 ```
+
+> **Why the patched LibreHardwareMonitorLib?** Upstream 0.9.6 throws while
+> parsing an invalid BIOS date (some boards report `00/00/0000`), which aborts
+> hardware enumeration and disables **every** sensor. See
+> [`tools/lhm-patch/README.md`](tools/lhm-patch/README.md). Remove the step once
+> upstream fixes it.
 
 ## How the CPU thermal threshold works
 
@@ -160,6 +170,14 @@ Two things are required:
    but temperatures are still missing while CPU model/clock/load, memory and
    disk work, the driver is the cause — Celsius shows an on-screen warning in
    that case.
+
+If **no** sensor at all works (temperature, clock, load, memory and GPU list all
+empty) even when elevated and with PawnIO installed, the machine likely reports
+an invalid BIOS date (e.g. `00/00/0000`), which crashes the stock
+LibreHardwareMonitor 0.9.6 SMBios parser. This repo ships a patched build — see
+[`tools/lhm-patch/README.md`](tools/lhm-patch/README.md). Run
+`tools/Diag` to check: it prints elevation, the CPU/thermal profile and whether
+temperature sensors are available.
 
 CPU load, clock, memory, disk and GPU *names* work without the driver.
 

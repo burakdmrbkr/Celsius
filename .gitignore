@@ -7,6 +7,8 @@
 publish/
 dist/
 vendor/
+local-nuget/
+lhm-src/
 *.binlog
 *.tlog
 

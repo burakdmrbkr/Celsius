@@ -21,6 +21,11 @@ temperatures need low-level MSR/PCI access, which only the kernel driver can
 provide; everything else comes from WMI, performance counters or DXGI, which
 need no driver.
 
+> If **nothing** works — temperature, clock, load, memory and the GPU list are
+> *all* empty despite elevation and an installed PawnIO — the cause is a
+> different bug: an invalid BIOS date crashing the stock LibreHardwareMonitor
+> SMBios parser. See [`../tools/lhm-patch/README.md`](../tools/lhm-patch/README.md).
+
 ## Fix
 
 ### 1. Install PawnIO (the actual fix)

@@ -39,6 +39,10 @@ jobs:
           "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
           "tag=$tag" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
 
+      - name: Build patched LibreHardwareMonitorLib
+        shell: pwsh
+        run: ./tools/lhm-patch/build-patched-lhm.ps1
+
       - name: Restore
         run: dotnet restore Celsius.slnx
 

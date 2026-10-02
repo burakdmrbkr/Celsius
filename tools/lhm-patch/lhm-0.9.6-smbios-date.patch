@@ -1,0 +1,26 @@
+﻿diff --git a/LibreHardwareMonitorLib/Hardware/SMBios.cs b/LibreHardwareMonitorLib/Hardware/SMBios.cs
+index 8603ad2..b15b4c6 100644
+--- a/LibreHardwareMonitorLib/Hardware/SMBios.cs
++++ b/LibreHardwareMonitorLib/Hardware/SMBios.cs
+@@ -649,11 +649,18 @@ public class BiosInformation : InformationBase
+             int.TryParse(parts[1], out int day) &&
+             int.TryParse(parts[2], out int year))
+         {
+-            // Check if the SMBIOS specification is followed.
+-            if (month > 12 || day > 31)
++            // Check if the SMBIOS specification is followed. Values below 1
++            // (e.g. a board reporting "00/00/0000") would make the DateTime
++            // constructor below throw, which would abort the whole hardware
++            // enumeration, so reject them too.
++            if (month is < 1 or > 12 || day is < 1 or > 31)
+                 return null;
+ 
+-            return new DateTime(year < 100 ? 1900 + year : year, month, day);
++            int normalizedYear = year < 100 ? 1900 + year : year;
++            if (normalizedYear < 1 || normalizedYear > 9999)
++                return null;
++
++            return new DateTime(normalizedYear, month, day);
+         }
+ 
+         return null;
