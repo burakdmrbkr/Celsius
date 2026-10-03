@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1-beta] - 2026-10-03
+
+### Added
+
+- **Inno Setup installer** (`Celsius-<version>-win-x64-setup.exe`) that bundles
+  and installs the PawnIO kernel driver. Before installing it checks the
+  installed PawnIO version and warns when it is missing or outdated, then
+  installs/updates it automatically. English and Turkish UI.
+- `tools/Diag`, a read-only diagnostic that reports elevation, CPU identity,
+  thermal profile and sensor availability.
+- On-screen warning in the main window when running elevated but no temperature
+  sensors are available (points at the PawnIO driver).
+
+### Fixed
+
+- **All sensors disabled on boards with an invalid BIOS date** (e.g.
+  `00/00/0000`): LibreHardwareMonitor 0.9.6 crashed in `SMBios.GetDate`, which
+  aborted the whole hardware tree so CPU/GPU temperature, clock, load, memory
+  and the GPU list all came back empty. Celsius now consumes a patched
+  `LibreHardwareMonitorLib 0.9.6-celsius1` (see `tools/lhm-patch/`).
+- `HardwareMonitorService` now reports `HasTemperatureSensors` only when a
+  temperature value is actually read, enables motherboard/storage sensors,
+  widens CPU/GPU temperature detection, and surfaces backend errors
+  (`IHardwareMonitor.LastError` / `CelsiusEngine.SensorError`).
+
 ## [0.1.0-beta] - 2026-10-02
 
 ### Added
@@ -34,5 +59,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GitHub Actions CI (build + test) and release workflow (self-contained
   `win-x64` single-file publish on `v*` tags), plus Dependabot.
 
-[Unreleased]: https://github.com/burakdmrbkr/Celsius/compare/v0.1.0-beta...HEAD
+[Unreleased]: https://github.com/burakdmrbkr/Celsius/compare/v0.1.1-beta...HEAD
+[0.1.1-beta]: https://github.com/burakdmrbkr/Celsius/releases/tag/v0.1.1-beta
 [0.1.0-beta]: https://github.com/burakdmrbkr/Celsius/releases/tag/v0.1.0-beta
