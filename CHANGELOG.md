@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Application logo: a thermometer mark used for the app icon (`Celsius.exe`),
+  the system tray icon and the README. Generated from `tools/make-icon.ps1`
+  into `src/Celsius.App/Assets/` (`celsius.ico`, `celsius.png`).
+
 ## [0.1.2-beta] - 2026-10-03
 
 ### Fixed

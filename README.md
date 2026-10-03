@@ -1,9 +1,16 @@
-# Celsius
+<h1 align="center">
+  <img src="src/Celsius.App/Assets/celsius.png" alt="Celsius logo" width="120" height="120"><br>
+  Celsius
+</h1>
+
+<p align="center">
 
 [![CI](https://github.com/burakdmrbkr/Celsius/actions/workflows/ci.yml/badge.svg)](https://github.com/burakdmrbkr/Celsius/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/burakdmrbkr/Celsius?include_prereleases)](https://github.com/burakdmrbkr/Celsius/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET-10.0-512BD4)](https://dotnet.microsoft.com/)
+
+</p>
 
 > A lightweight Windows system monitor and CPU stress tester that lives in your
 > system tray. Watch your CPU temperature, clock and load, memory, disks and GPU —

@@ -1,14 +1,67 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Windows;
 
 namespace Celsius.App.Services;
 
-/// <summary>Generates the tray icon at runtime so no binary asset is required.</summary>
+/// <summary>
+/// Provides the Celsius tray icon from the application logo
+/// (<c>Assets/celsius.ico</c>), falling back to a runtime-drawn thermometer if
+/// the resource cannot be loaded.
+/// </summary>
 internal static class TrayIconFactory
 {
-    /// <summary>Creates the application tray icon (a stylized thermometer droplet).</summary>
-    public static System.Drawing.Icon CreateIcon(int size = 32)
+    private const string IconPackUri = "pack://application:,,,/Assets/celsius.ico";
+    private static Icon? _cached;
+
+    /// <summary>Returns the application tray icon.</summary>
+    public static Icon CreateIcon()
+    {
+        if (_cached is not null)
+        {
+            return (Icon)_cached.Clone();
+        }
+
+        var loaded = TryLoadLogoIcon();
+        if (loaded is not null)
+        {
+            _cached = loaded;
+            return (Icon)loaded.Clone();
+        }
+
+        return CreateFallbackIcon();
+    }
+
+    private static Icon? TryLoadLogoIcon()
+    {
+        try
+        {
+            var uri = new Uri(IconPackUri, UriKind.Absolute);
+            var info = Application.GetResourceStream(uri);
+            if (info?.Stream is null)
+            {
+                return null;
+            }
+
+            using var stream = info.Stream;
+            // Copy into a MemoryStream the Icon can own for its lifetime.
+            var ms = new MemoryStream();
+            stream.CopyTo(ms);
+            ms.Position = 0;
+            return new Icon(ms, new System.Drawing.Size(32, 32));
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Draws a simple thermometer at runtime. Used only when the embedded logo
+    /// asset is unavailable so the app always has a tray icon.
+    /// </summary>
+    private static Icon CreateFallbackIcon(int size = 32)
     {
         using var bitmap = new Bitmap(size, size);
         using (var g = Graphics.FromImage(bitmap))
