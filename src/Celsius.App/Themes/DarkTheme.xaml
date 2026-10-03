@@ -10,6 +10,9 @@
   <Color x:Key="ColorTextMuted">#94A3B8</Color>
   <Color x:Key="ColorAccent">#38BDF8</Color>
   <Color x:Key="ColorAccentPressed">#0EA5E9</Color>
+  <Color x:Key="ColorTempNormal">#22C55E</Color>
+  <Color x:Key="ColorTempWarm">#F59E0B</Color>
+  <Color x:Key="ColorTempHot">#EF4444</Color>
 
   <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource ColorBackground}" />
   <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource ColorSurface}" />
@@ -18,6 +21,9 @@
   <SolidColorBrush x:Key="TextBrush" Color="{StaticResource ColorText}" />
   <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource ColorTextMuted}" />
   <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource ColorAccent}" />
+  <SolidColorBrush x:Key="TempNormalBrush" Color="{StaticResource ColorTempNormal}" />
+  <SolidColorBrush x:Key="TempWarmBrush" Color="{StaticResource ColorTempWarm}" />
+  <SolidColorBrush x:Key="TempHotBrush" Color="{StaticResource ColorTempHot}" />
 
   <!-- Typography -->
   <FontFamily x:Key="AppFont">Segoe UI Variable Text, Segoe UI</FontFamily>
@@ -58,8 +64,97 @@
     <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="CornerRadius" Value="10" />
-    <Setter Property="Padding" Value="14,10" />
-    <Setter Property="Margin" Value="0,0,0,8" />
+    <Setter Property="Padding" Value="16,12" />
+    <Setter Property="Margin" Value="0,0,0,10" />
+  </Style>
+
+  <!-- Metric value with a trailing unit rendered at a smaller size -->
+  <Style x:Key="MetricUnit" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource AppFont}" />
+    <Setter Property="Foreground" Value="{StaticResource TextMutedBrush}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="VerticalAlignment" Value="Bottom" />
+    <Setter Property="Margin" Value="2,0,0,1" />
+  </Style>
+
+  <!-- Thin horizontal divider -->
+  <Style TargetType="Separator">
+    <Setter Property="Background" Value="{StaticResource BorderBrush}" />
+    <Setter Property="Height" Value="1" />
+    <Setter Property="Margin" Value="0,8" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Separator">
+          <Border Height="1" Background="{TemplateBinding Background}" />
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Tooltip -->
+  <Style TargetType="ToolTip">
+    <Setter Property="FontFamily" Value="{StaticResource AppFont}" />
+    <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+    <Setter Property="Background" Value="{StaticResource SurfaceAltBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="Padding" Value="8,5" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ToolTip">
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="1"
+                  CornerRadius="6"
+                  Padding="{TemplateBinding Padding}">
+            <ContentPresenter />
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Scrollbar -->
+  <Style x:Key="ScrollThumb" TargetType="Thumb">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Thumb">
+          <Border x:Name="Bd"
+                  Background="#334155"
+                  CornerRadius="4"
+                  Margin="2,0" />
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Bd" Property="Background" Value="#475569" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style TargetType="ScrollBar">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Width" Value="10" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ScrollBar">
+          <Grid Background="{TemplateBinding Background}">
+            <Track x:Name="PART_Track" IsDirectionReversed="True">
+              <Track.Thumb>
+                <Thumb Style="{StaticResource ScrollThumb}" />
+              </Track.Thumb>
+              <Track.IncreaseRepeatButton>
+                <RepeatButton Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="False" />
+              </Track.IncreaseRepeatButton>
+              <Track.DecreaseRepeatButton>
+                <RepeatButton Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="False" />
+              </Track.DecreaseRepeatButton>
+            </Track>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
   </Style>
 
   <!-- Buttons -->

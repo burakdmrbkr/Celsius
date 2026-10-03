@@ -85,7 +85,7 @@
 
                         <TextBlock x:Name="CpuTempLabel" Grid.Row="0" Grid.Column="0" Style="{StaticResource MetricLabel}" />
                         <TextBlock x:Name="CpuTempValue" Grid.Row="0" Grid.Column="1" Style="{StaticResource MetricValue}"
-                                   Foreground="{Binding CpuTemperatureC, Converter={StaticResource TemperatureBrush}}" />
+                                   Foreground="{StaticResource TempNormalBrush}" />
 
                         <TextBlock x:Name="CpuClockLabel" Grid.Row="1" Grid.Column="0" Style="{StaticResource MetricLabel}" Margin="0,6,0,0" />
                         <TextBlock x:Name="CpuClockValue" Grid.Row="1" Grid.Column="1" Style="{StaticResource MetricValue}" Margin="0,6,0,0" />
