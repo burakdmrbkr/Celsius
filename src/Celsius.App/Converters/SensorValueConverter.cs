@@ -51,23 +51,35 @@ public sealed class TemperatureBrushConverter : IValueConverter
 
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        var color = NormalColor;
-
-        if (value is float f && !float.IsNaN(f))
-        {
-            if (f >= HotThreshold)
-            {
-                color = HotColor;
-            }
-            else if (f >= WarmThreshold)
-            {
-                color = WarmColor;
-            }
-        }
-
+        var color = ResolveColor(value as float? ?? float.NaN, HotThreshold, WarmThreshold, NormalColor, WarmColor, HotColor);
         return new System.Windows.Media.BrushConverter().ConvertFromString(color)
             as System.Windows.Media.Brush
             ?? System.Windows.Media.Brushes.White;
+    }
+
+    /// <summary>
+    /// Resolves the temperature colour for a value. Shared by the XAML converter
+    /// and code-behind so both stay consistent.
+    /// </summary>
+    public static string ResolveColor(
+        float? value,
+        double hotThreshold,
+        double warmThreshold,
+        string normalColor,
+        string warmColor,
+        string hotColor)
+    {
+        if (value is not { } f || float.IsNaN(f))
+        {
+            return normalColor;
+        }
+
+        if (f >= hotThreshold)
+        {
+            return hotColor;
+        }
+
+        return f >= warmThreshold ? warmColor : normalColor;
     }
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>

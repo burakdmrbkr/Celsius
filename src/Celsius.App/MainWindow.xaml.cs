@@ -99,6 +99,7 @@ public partial class MainWindow : Window
     private void RenderSnapshot(SystemSnapshot snapshot)
     {
         CpuTempValue.Text = Format(snapshot.CpuTemperatureC, "°C");
+        CpuTempValue.Foreground = ResolveTemperatureBrush(snapshot.CpuTemperatureC);
         CpuClockValue.Text = Format(snapshot.CpuClockMhz, "MHz");
         CpuLoadValue.Text = Format(snapshot.CpuLoadPercent, "%");
         MemoryValue.Text = Format(snapshot.MemoryUsedPercent, "%");
@@ -121,6 +122,29 @@ public partial class MainWindow : Window
         value is { } v && !float.IsNaN(v)
             ? $"{MathF.Round(v)} {unit}"
             : LocalizationManager.Get("ValueUnavailable");
+
+    /// <summary>
+    /// Picks the temperature colour brush adaptively: green normally, amber as it
+    /// approaches the warm threshold and red near the thermal limit.
+    /// </summary>
+    private static System.Windows.Media.Brush ResolveTemperatureBrush(float? value)
+    {
+        // Thresholds are fixed for the dashboard; GPU rows keep their own converter
+        // defaults so the two views can be tuned independently.
+        const double hotThreshold = 85;
+        const double warmThreshold = 70;
+
+        var color = Converters.TemperatureBrushConverter.ResolveColor(
+            value,
+            hotThreshold,
+            warmThreshold,
+            "#22C55E",
+            "#F59E0B",
+            "#EF4444");
+
+        return (System.Windows.Media.Brush)new System.Windows.Media.BrushConverter()
+            .ConvertFromString(color)!;
+    }
 
     private void OnStressClick(object sender, RoutedEventArgs e) => App.ShowStressTest();
 

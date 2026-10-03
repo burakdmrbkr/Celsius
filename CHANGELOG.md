@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2-beta] - 2026-10-03
+
+### Fixed
+
+- **CPU temperature value rendered black** on the dashboard. Its `Foreground`
+  used a binding against a `DataContext` that is never set, so WPF fell back to
+  `TextBlock`'s default (black) instead of the theme colour.
+
+### Changed
+
+- The CPU temperature value now **adapts its colour to the live reading**:
+  green below 70 °C, amber from 70 °C, red from 85 °C.
+- Shared the temperature colour logic via
+  `TemperatureBrushConverter.ResolveColor` so the XAML converter and code-behind
+  stay consistent.
+- Minor dashboard polish: `TempNormal/Warm/Hot` theme brushes, plus styles for
+  metric units, separators, tooltips and a slimmer scrollbar.
+
 ## [0.1.1-beta] - 2026-10-03
 
 ### Added
