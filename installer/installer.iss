@@ -54,6 +54,7 @@ PrivilegesRequired=admin
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 MinVersion=10.0
+SetupIconFile=..\src\Celsius.App\Assets\celsius.ico
 UninstallDisplayIcon={app}\Celsius.exe
 ; The bundled PawnIO_setup.exe is a signed third-party binary: keep it in the
 ; install payload so users can re-run it if the driver is ever removed.
@@ -88,9 +89,9 @@ Source: "{#PublishDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 Source: "{#PawnIoSetup}"; DestDir: "{app}\pawnio"; DestName: "PawnIO_setup.exe"; Flags: ignoreversion
 
 [Icons]
-Name: "{group}\Celsius"; Filename: "{app}\Celsius.exe"
-Name: "{group}\Uninstall Celsius"; Filename: "{uninstallexe}"
-Name: "{autodesktop}\Celsius"; Filename: "{app}\Celsius.exe"; Tasks: desktopicon
+Name: "{group}\Celsius"; Filename: "{app}\Celsius.exe"; IconFilename: "{app}\Celsius.exe"
+Name: "{group}\Uninstall Celsius"; Filename: "{uninstallexe}"; IconFilename: "{app}\Celsius.exe"
+Name: "{autodesktop}\Celsius"; Filename: "{app}\Celsius.exe"; IconFilename: "{app}\Celsius.exe"; Tasks: desktopicon
 
 [Run]
 ; PawnIO itself is installed from [Code] (CurStepChanged) so its exit code can
