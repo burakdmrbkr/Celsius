@@ -7,11 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3-beta] - 2026-10-03
+
 ### Added
 
-- Application logo: a thermometer mark used for the app icon (`Celsius.exe`),
-  the system tray icon and the README. Generated from `tools/make-icon.ps1`
-  into `src/Celsius.App/Assets/` (`celsius.ico`, `celsius.png`).
+- Official application logo: a red thermometer mark used as the app icon
+  (`Celsius.exe`), the system tray icon, the installer wizard icon and the
+  README. Source `src/Celsius.App/Assets/celsius.png`; the multi-resolution
+  `.ico` is produced by `tools/make-icon.ps1`.
 
 ## [0.1.2-beta] - 2026-10-03
 
@@ -83,6 +86,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GitHub Actions CI (build + test) and release workflow (self-contained
   `win-x64` single-file publish on `v*` tags), plus Dependabot.
 
-[Unreleased]: https://github.com/burakdmrbkr/Celsius/compare/v0.1.1-beta...HEAD
+[Unreleased]: https://github.com/burakdmrbkr/Celsius/compare/v0.1.3-beta...HEAD
+[0.1.3-beta]: https://github.com/burakdmrbkr/Celsius/releases/tag/v0.1.3-beta
+[0.1.2-beta]: https://github.com/burakdmrbkr/Celsius/releases/tag/v0.1.2-beta
 [0.1.1-beta]: https://github.com/burakdmrbkr/Celsius/releases/tag/v0.1.1-beta
 [0.1.0-beta]: https://github.com/burakdmrbkr/Celsius/releases/tag/v0.1.0-beta
